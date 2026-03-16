@@ -1,6 +1,5 @@
 using System.Collections.Concurrent;
 using System.Text.Json;
-using Microsoft.Agents.AI;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,7 +23,7 @@ internal sealed record TrackedTimelineState(
     string NodeName,
     string ConversationJson,
     Dictionary<string, string> Variables,
-    ChatClientAgentSession Session);
+    string SerializedSessionJson);
 
 public sealed class TimeTravelService
 {
@@ -50,22 +49,16 @@ public sealed class TimeTravelService
         string nodeName,
         string lastThought,
         IReadOnlyDictionary<string, object> values,
-        ChatClientAgentSession? session = null,
         CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
-
-        session ??= new ChatClientAgentSession
-        {
-            ConversationId = threadId
-        };
 
         var variables = values.ToDictionary(kvp => kvp.Key, kvp => kvp.Value?.ToString() ?? string.Empty, StringComparer.OrdinalIgnoreCase);
         variables["ThreadId"] = threadId;
         variables["AgentName"] = agentName;
         variables["NodeName"] = nodeName;
         variables["LastThought"] = lastThought;
-        variables[AgentSessionJsonKey] = session.Serialize(null).GetRawText();
+        variables[AgentSessionJsonKey] = BuildSessionEnvelopeJson(threadId, nodeName, variables);
 
         var state = new TrackedTimelineState(
             threadId,
@@ -82,7 +75,7 @@ public sealed class TimeTravelService
                 }
             }),
             variables,
-            session);
+            variables[AgentSessionJsonKey]);
 
         _trackedStates[threadId] = state;
         return Task.CompletedTask;
@@ -134,9 +127,7 @@ public sealed class TimeTravelService
         }
 
         var threadId = snapshot.Variables.GetValueOrDefault("ThreadId", checkpointId.ToString("N"));
-        var session = DeserializeSession(snapshot.Variables.GetValueOrDefault(AgentSessionJsonKey));
         var nodeName = snapshot.Variables.GetValueOrDefault("NodeName", snapshot.CheckpointType);
-        var lastThought = snapshot.Variables.GetValueOrDefault("LastThought", "Checkpoint rewound.");
 
         _trackedStates[threadId] = new TrackedTimelineState(
             threadId,
@@ -144,7 +135,7 @@ public sealed class TimeTravelService
             nodeName,
             snapshot.ConversationJson,
             new Dictionary<string, string>(snapshot.Variables, StringComparer.OrdinalIgnoreCase),
-            session);
+            snapshot.Variables.GetValueOrDefault(AgentSessionJsonKey, BuildSessionEnvelopeJson(threadId, nodeName, snapshot.Variables)));
 
         await _hubContext.Clients.All.SendAsync(
             "ReceiveThought",
@@ -176,16 +167,15 @@ public sealed class TimeTravelService
             ["ForkedFromCheckpointId"] = checkpointId.ToString("N")
         };
 
-        var session = trackedState.Session;
-        session.ConversationId = forkThreadId;
-        variables[AgentSessionJsonKey] = session.Serialize(null).GetRawText();
+        var serializedSessionJson = BuildSessionEnvelopeJson(forkThreadId, $"{trackedState.NodeName}.Fork", variables);
+        variables[AgentSessionJsonKey] = serializedSessionJson;
 
         _trackedStates[forkThreadId] = trackedState with
         {
             ThreadId = forkThreadId,
             NodeName = $"{trackedState.NodeName}.Fork",
             Variables = variables,
-            Session = session
+            SerializedSessionJson = serializedSessionJson
         };
 
         await using var dbContext = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
@@ -234,16 +224,15 @@ public sealed class TimeTravelService
         return snapshots.Select(ToView).ToArray();
     }
 
-    private static ChatClientAgentSession DeserializeSession(string? serializedSessionJson)
-    {
-        if (string.IsNullOrWhiteSpace(serializedSessionJson))
+    private static string BuildSessionEnvelopeJson(string threadId, string nodeName, IReadOnlyDictionary<string, string> variables)
+        => JsonSerializer.Serialize(new
         {
-            return new ChatClientAgentSession();
-        }
-
-        using var json = JsonDocument.Parse(serializedSessionJson);
-        return ChatClientAgentSession.Deserialize(json.RootElement, null);
-    }
+            SessionType = "AgentSessionEnvelope",
+            ThreadId = threadId,
+            NodeName = nodeName,
+            State = variables,
+            StoredAtUtc = DateTimeOffset.UtcNow
+        });
 
     private static TimeTravelCheckpointView ToView(AgentStateSnapshot snapshot)
         => new(

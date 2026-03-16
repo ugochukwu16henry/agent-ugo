@@ -107,7 +107,6 @@ C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\bin\Debug\net10.0\OpenTelemet
 C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\bin\Debug\net10.0\OpenTelemetry.Extensions.Hosting.dll
 C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\bin\Debug\net10.0\OpenTelemetry.PersistentStorage.Abstractions.dll
 C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\bin\Debug\net10.0\OpenTelemetry.PersistentStorage.FileSystem.dll
-C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\obj\Debug\net10.0\compressed\cdt5b5cf77-{0}-984mihlv8h-984mihlv8h.gz
 C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\bin\Debug\net10.0\Microsoft.Data.Sqlite.dll
 C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\bin\Debug\net10.0\Microsoft.Extensions.AI.Evaluation.dll
 C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\bin\Debug\net10.0\SQLitePCLRaw.batteries_v2.dll
@@ -136,3 +135,9 @@ C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\bin\Debug\net10.0\runtimes\wi
 C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\bin\Debug\net10.0\runtimes\win-arm64\native\e_sqlite3.dll
 C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\bin\Debug\net10.0\runtimes\win-x64\native\e_sqlite3.dll
 C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\bin\Debug\net10.0\runtimes\win-x86\native\e_sqlite3.dll
+C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\bin\Debug\net10.0\Microsoft.EntityFrameworkCore.dll
+C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\bin\Debug\net10.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\bin\Debug\net10.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\bin\Debug\net10.0\Microsoft.EntityFrameworkCore.Sqlite.dll
+C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\bin\Debug\net10.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\obj\Debug\net10.0\compressed\cdt5b5cf77-{0}-ucaeq4ln6w-ucaeq4ln6w.gz

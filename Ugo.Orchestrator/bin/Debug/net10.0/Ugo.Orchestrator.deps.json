@@ -11,7 +11,10 @@
           "Azure.Monitor.OpenTelemetry.Exporter": "1.4.0",
           "Microsoft.Agents.AI": "1.0.0-rc4",
           "Microsoft.AspNetCore.SignalR.Client": "10.0.0",
-          "Microsoft.Data.Sqlite": "10.0.5",
+          "Microsoft.EntityFrameworkCore": "10.0.5",
+          "Microsoft.EntityFrameworkCore.Sqlite": "10.0.5",
+          "Microsoft.Extensions.AI": "10.4.0",
+          "Microsoft.Extensions.AI.Abstractions": "10.4.0",
           "Microsoft.Extensions.AI.Evaluation": "10.4.0",
           "Microsoft.Extensions.VectorData.Abstractions": "10.0.1",
           "Microsoft.FluentUI.AspNetCore.Components": "4.13.0",
@@ -72,7 +75,7 @@
       "Microsoft.Agents.AI/1.0.0-rc4": {
         "dependencies": {
           "Microsoft.Agents.AI.Abstractions": "1.0.0-rc4",
-          "Microsoft.Extensions.AI": "10.3.0",
+          "Microsoft.Extensions.AI": "10.4.0",
           "Microsoft.Extensions.AI.Abstractions": "10.4.0",
           "Microsoft.Extensions.VectorData.Abstractions": "10.0.1",
           "Microsoft.ML.Tokenizers": "2.0.0"
@@ -139,13 +142,6 @@
           }
         }
       },
-      "Microsoft.Data.Sqlite/10.0.5": {
-        "dependencies": {
-          "Microsoft.Data.Sqlite.Core": "10.0.5",
-          "SQLitePCLRaw.bundle_e_sqlite3": "2.1.11",
-          "SQLitePCLRaw.core": "2.1.11"
-        }
-      },
       "Microsoft.Data.Sqlite.Core/10.0.5": {
         "dependencies": {
           "SQLitePCLRaw.core": "2.1.11"
@@ -157,15 +153,67 @@
           }
         }
       },
-      "Microsoft.Extensions.AI/10.3.0": {
+      "Microsoft.EntityFrameworkCore/10.0.5": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Abstractions": "10.0.5"
+        },
+        "runtime": {
+          "lib/net10.0/Microsoft.EntityFrameworkCore.dll": {
+            "assemblyVersion": "10.0.5.0",
+            "fileVersion": "10.0.526.15411"
+          }
+        }
+      },
+      "Microsoft.EntityFrameworkCore.Abstractions/10.0.5": {
+        "runtime": {
+          "lib/net10.0/Microsoft.EntityFrameworkCore.Abstractions.dll": {
+            "assemblyVersion": "10.0.5.0",
+            "fileVersion": "10.0.526.15411"
+          }
+        }
+      },
+      "Microsoft.EntityFrameworkCore.Relational/10.0.5": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "10.0.5"
+        },
+        "runtime": {
+          "lib/net10.0/Microsoft.EntityFrameworkCore.Relational.dll": {
+            "assemblyVersion": "10.0.5.0",
+            "fileVersion": "10.0.526.15411"
+          }
+        }
+      },
+      "Microsoft.EntityFrameworkCore.Sqlite/10.0.5": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Sqlite.Core": "10.0.5",
+          "Microsoft.Extensions.DependencyModel": "10.0.5",
+          "SQLitePCLRaw.bundle_e_sqlite3": "2.1.11",
+          "SQLitePCLRaw.core": "2.1.11"
+        }
+      },
+      "Microsoft.EntityFrameworkCore.Sqlite.Core/10.0.5": {
+        "dependencies": {
+          "Microsoft.Data.Sqlite.Core": "10.0.5",
+          "Microsoft.EntityFrameworkCore.Relational": "10.0.5",
+          "Microsoft.Extensions.DependencyModel": "10.0.5",
+          "SQLitePCLRaw.core": "2.1.11"
+        },
+        "runtime": {
+          "lib/net10.0/Microsoft.EntityFrameworkCore.Sqlite.dll": {
+            "assemblyVersion": "10.0.5.0",
+            "fileVersion": "10.0.526.15411"
+          }
+        }
+      },
+      "Microsoft.Extensions.AI/10.4.0": {
         "dependencies": {
           "Microsoft.Extensions.AI.Abstractions": "10.4.0",
-          "System.Numerics.Tensors": "10.0.3"
+          "System.Numerics.Tensors": "10.0.4"
         },
         "runtime": {
           "lib/net10.0/Microsoft.Extensions.AI.dll": {
-            "assemblyVersion": "10.3.0.0",
-            "fileVersion": "10.300.26.10911"
+            "assemblyVersion": "10.4.0.0",
+            "fileVersion": "10.400.26.16002"
           }
         }
       },
@@ -185,6 +233,14 @@
           "lib/net10.0/Microsoft.Extensions.AI.Evaluation.dll": {
             "assemblyVersion": "10.4.0.0",
             "fileVersion": "10.400.26.16002"
+          }
+        }
+      },
+      "Microsoft.Extensions.DependencyModel/10.0.5": {
+        "runtime": {
+          "lib/net10.0/Microsoft.Extensions.DependencyModel.dll": {
+            "assemblyVersion": "10.0.0.5",
+            "fileVersion": "10.0.526.15411"
           }
         }
       },
@@ -272,7 +328,7 @@
       "Microsoft.SemanticKernel.Core/1.38.0": {
         "dependencies": {
           "Microsoft.SemanticKernel.Abstractions": "1.38.0",
-          "System.Numerics.Tensors": "10.0.3"
+          "System.Numerics.Tensors": "10.0.4"
         },
         "runtime": {
           "lib/net8.0/Microsoft.SemanticKernel.Core.dll": {
@@ -521,11 +577,11 @@
           }
         }
       },
-      "System.Numerics.Tensors/10.0.3": {
+      "System.Numerics.Tensors/10.0.4": {
         "runtime": {
           "lib/net10.0/System.Numerics.Tensors.dll": {
-            "assemblyVersion": "10.0.0.3",
-            "fileVersion": "10.0.326.7603"
+            "assemblyVersion": "10.0.0.4",
+            "fileVersion": "10.0.426.12010"
           }
         }
       }
@@ -614,13 +670,6 @@
       "path": "microsoft.bcl.hashcode/1.1.1",
       "hashPath": "microsoft.bcl.hashcode.1.1.1.nupkg.sha512"
     },
-    "Microsoft.Data.Sqlite/10.0.5": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-y4noWO5q8tav8I/JyOhuWxII+1KrXCLuhjXdP1GRd3PvVf/IlgL+eQlikp9DyCrybQxS/0ZO7Me/X6c22MjSaQ==",
-      "path": "microsoft.data.sqlite/10.0.5",
-      "hashPath": "microsoft.data.sqlite.10.0.5.nupkg.sha512"
-    },
     "Microsoft.Data.Sqlite.Core/10.0.5": {
       "type": "package",
       "serviceable": true,
@@ -628,12 +677,47 @@
       "path": "microsoft.data.sqlite.core/10.0.5",
       "hashPath": "microsoft.data.sqlite.core.10.0.5.nupkg.sha512"
     },
-    "Microsoft.Extensions.AI/10.3.0": {
+    "Microsoft.EntityFrameworkCore/10.0.5": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-zJYAHVM+zA74MNHifAyYE/jnfilI5WOnyQqnYobQZ5JW1VRSMGfQl/oqYdK3p2AdQOX8VcxSW6C+UsZYnpFB+A==",
-      "path": "microsoft.extensions.ai/10.3.0",
-      "hashPath": "microsoft.extensions.ai.10.3.0.nupkg.sha512"
+      "sha512": "sha512-9tNBmK3EpYVGRQLiqP+bqK2m+TD0Gv//4vCzR7ZOgl4FWzCFyOpYdIVka13M4kcBdPdSJcs3wbHr3rmzOqbIMA==",
+      "path": "microsoft.entityframeworkcore/10.0.5",
+      "hashPath": "microsoft.entityframeworkcore.10.0.5.nupkg.sha512"
+    },
+    "Microsoft.EntityFrameworkCore.Abstractions/10.0.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-32c58Rnm47Qvhimawf67KO9PytgPz3QoWye7Abapt0Yocw/JnzMiSNj/pRoIKyn8Jxypkv86zxKD4Q/zNTc0Ag==",
+      "path": "microsoft.entityframeworkcore.abstractions/10.0.5",
+      "hashPath": "microsoft.entityframeworkcore.abstractions.10.0.5.nupkg.sha512"
+    },
+    "Microsoft.EntityFrameworkCore.Relational/10.0.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-uxmFjZEAB/KbsgWFSS4lLqkEHCfXxB2x0UcbiO4e5fCRpFFeTMSx/me6009nYJLu5IKlDwO1POh++P6RilFTDw==",
+      "path": "microsoft.entityframeworkcore.relational/10.0.5",
+      "hashPath": "microsoft.entityframeworkcore.relational.10.0.5.nupkg.sha512"
+    },
+    "Microsoft.EntityFrameworkCore.Sqlite/10.0.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-lxeRviglTkkmzYJVJ600yb6gJjnf5za9v7uH+0byuSXTGv7U8cT6hz7qRTmiGSOfLcl86QFdy2BBKaUFd6NQug==",
+      "path": "microsoft.entityframeworkcore.sqlite/10.0.5",
+      "hashPath": "microsoft.entityframeworkcore.sqlite.10.0.5.nupkg.sha512"
+    },
+    "Microsoft.EntityFrameworkCore.Sqlite.Core/10.0.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-rVH43bcUyZiMn0SnCpVnvFpl4PFxT4GwmuVVLcT4JL0NtzuHY9ymKV+Llb5cjuJ+6+gEl4eixy2rE8nxOPcBSA==",
+      "path": "microsoft.entityframeworkcore.sqlite.core/10.0.5",
+      "hashPath": "microsoft.entityframeworkcore.sqlite.core.10.0.5.nupkg.sha512"
+    },
+    "Microsoft.Extensions.AI/10.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-7kKIuaUMFWikveZUjSrs53XfMVV7IDGSDaGp6/y/hV0HXsA7N2oIODZWxtEkEj8Q4cd/Oc/VlsVlg8efof7gFA==",
+      "path": "microsoft.extensions.ai/10.4.0",
+      "hashPath": "microsoft.extensions.ai.10.4.0.nupkg.sha512"
     },
     "Microsoft.Extensions.AI.Abstractions/10.4.0": {
       "type": "package",
@@ -648,6 +732,13 @@
       "sha512": "sha512-9CPUMm6mn+EcwnddG2SiVgsOm0IIvoehHicx17eTdBQgm4KEBet/g4Xn8Ia0wcECTO0deRcd9DiG8Bvn63uRxQ==",
       "path": "microsoft.extensions.ai.evaluation/10.4.0",
       "hashPath": "microsoft.extensions.ai.evaluation.10.4.0.nupkg.sha512"
+    },
+    "Microsoft.Extensions.DependencyModel/10.0.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-xA4kkL+QS6KCAOKz/O0oquHs44Ob8J7zpBCNt3wjkBWDg5aCqfwG8rWWLsg5V86AM0sB849g9JjPjIdksTCIKg==",
+      "path": "microsoft.extensions.dependencymodel/10.0.5",
+      "hashPath": "microsoft.extensions.dependencymodel.10.0.5.nupkg.sha512"
     },
     "Microsoft.Extensions.VectorData.Abstractions/10.0.1": {
       "type": "package",
@@ -796,12 +887,12 @@
       "path": "system.memory.data/6.0.1",
       "hashPath": "system.memory.data.6.0.1.nupkg.sha512"
     },
-    "System.Numerics.Tensors/10.0.3": {
+    "System.Numerics.Tensors/10.0.4": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-calKQ5nqV98lVRSCV7KFrlmw7nE7z6qIBWnMP+f7xAzY9H1cO15zJmkuZYM9RxYXDzQyI60/+dXd65UUY4HZFQ==",
-      "path": "system.numerics.tensors/10.0.3",
-      "hashPath": "system.numerics.tensors.10.0.3.nupkg.sha512"
+      "sha512": "sha512-EK8wJVxnVfeCzchnEqVjIfZDpVIcmjfjUs9x1nzI41X2naPGT57QjoHlQJma2vDQUxEtPQiGv/v90mwcflx6mQ==",
+      "path": "system.numerics.tensors/10.0.4",
+      "hashPath": "system.numerics.tensors.10.0.4.nupkg.sha512"
     }
   }
 }

@@ -1,0 +1,88 @@
+:root {
+    /* Brand colors */
+    --ugo-primary-black: #0A0B10;
+    --ugo-blue: #00D4FF;
+    --ugo-verification-green: #00FF9D;
+    --ugo-warning-amber: #FFB800;
+    --ugo-glass-white: rgba(255, 255, 255, 0.05);
+
+    /* Backgrounds */
+    --ugo-bg-deep: radial-gradient(circle at top, #1b2735 0, #090a0f 55%, #000 100%);
+    --ugo-surface-glass: radial-gradient(circle at top left, rgba(255,255,255,0.25), var(--ugo-glass-white));
+
+    /* Typography */
+    --ugo-font-family-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Inter', 'Geist', 'SF Pro Text', sans-serif;
+    --ugo-font-size-base: 14px;
+    --ugo-font-size-title: 1.8rem;
+    --ugo-font-size-subtitle: 0.95rem;
+
+    /* Glassmorphism primitive */
+    --ugo-glass-backdrop-filter: blur(16px) saturate(180%);
+    --ugo-glass-border-color: rgba(255, 255, 255, 0.18);
+    --ugo-glass-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.55),
+        0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+html,
+body {
+    font-family: var(--ugo-font-family-sans);
+    font-size: var(--ugo-font-size-base);
+    background: var(--ugo-bg-deep);
+    color: #f5f7ff;
+}
+
+/* Scrollbar styling: thin neon blue track */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--ugo-blue) transparent;
+}
+
+*::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+*::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: var(--ugo-blue);
+    border-radius: 999px;
+}
+
+.ugo-glass-card {
+    background: var(--ugo-surface-glass);
+    border-radius: 18px;
+    border: 1px solid var(--ugo-glass-border-color);
+    box-shadow: var(--ugo-glass-shadow);
+    backdrop-filter: var(--ugo-glass-backdrop-filter);
+    -webkit-backdrop-filter: var(--ugo-glass-backdrop-filter);
+}
+
+.ugo-main-layout {
+    min-height: 100vh;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    padding: 2rem 0;
+}
+
+.ugo-main-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.ugo-title {
+    font-size: var(--ugo-font-size-title);
+    font-weight: 700;
+}
+
+.ugo-subtitle {
+    font-size: var(--ugo-font-size-subtitle);
+    color: rgba(255, 255, 255, 0.7);
+}
+
