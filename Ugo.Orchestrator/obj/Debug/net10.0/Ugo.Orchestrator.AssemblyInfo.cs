@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Ugo.Orchestrator")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d08ca9a0a076365eac9f0ed37c447b009e284f14")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3ad7fb4d5f472fc3f72f94b80b85cdd982b381e4")]
 [assembly: System.Reflection.AssemblyProductAttribute("Ugo.Orchestrator")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Ugo.Orchestrator")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
