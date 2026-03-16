@@ -89,3 +89,5 @@ C:\Users\Dell\Documents\agent-ugo\AgentUgo.Dashboard\obj\Debug\net10.0\swae.buil
 C:\Users\Dell\Documents\agent-ugo\AgentUgo.Dashboard\obj\Debug\net10.0\AgentUgo.6CA2F1BA.Up2Date
 C:\Users\Dell\Documents\agent-ugo\AgentUgo.Dashboard\obj\Debug\net10.0\AgentUgo.Dashboard.genruntimeconfig.cache
 C:\Users\Dell\Documents\agent-ugo\AgentUgo.Dashboard\obj\Debug\net10.0\ref\AgentUgo.Dashboard.dll
+C:\Users\Dell\Documents\agent-ugo\AgentUgo.Dashboard\obj\Debug\net10.0\compressed\jgknrjp6g3-{0}-5yp2lhra8s-5yp2lhra8s.gz
+C:\Users\Dell\Documents\agent-ugo\AgentUgo.Dashboard\obj\Debug\net10.0\compressed\58eqisthfg-{0}-18x4f6atdj-18x4f6atdj.gz
