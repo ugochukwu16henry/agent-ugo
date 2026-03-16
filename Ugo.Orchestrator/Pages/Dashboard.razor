@@ -14,8 +14,8 @@
 
 <PageTitle>Agent Ugo | Command Center</PageTitle>
 
-<UgoCommandPalette IsVisible="IsPaletteOpen"                   IsVisibleChanged="@(v => { IsPaletteOpen = v; StateHasChanged(); })"
-                   OnDirectorCommand="HandleDirectorCommandAsync"                   OnFileOpen="HandleFileOpenAsync" />
+<UgoCommandPalette IsVisible="IsPaletteOpen" IsVisibleChanged="@(v => { IsPaletteOpen = v; StateHasChanged(); })"
+                   OnDirectorCommand="HandleDirectorCommandAsync" OnFileOpen="HandleFileOpenAsync" />
 
 <div class="ugo-workbench">
     <div class="activity-bar" aria-label="Activity Bar">
@@ -286,6 +286,12 @@ trace.Status, $"{trace.Source}: {trace.Content}")))
     public void TogglePalette()
     {
         IsPaletteOpen = !IsPaletteOpen;
+        StateHasChanged();
+    }
+
+    private void OnPaletteVisibilityChanged(bool visible)
+    {
+        IsPaletteOpen = visible;
         StateHasChanged();
     }
 
