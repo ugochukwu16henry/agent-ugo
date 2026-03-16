@@ -98,5 +98,5 @@ C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\obj\Debug\net10.0\Ugo.Orchest
 C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\obj\Debug\net10.0\ref\Ugo.Orchestrator.dll
 C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\obj\Debug\net10.0\scopedcss\Pages\Dashboard.razor.rz.scp.css
 C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\obj\Debug\net10.0\scopedcss\projectbundle\Ugo.Orchestrator.bundle.scp.css
-C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\obj\Debug\net10.0\compressed\57291woz8s-{0}-7qal65r08q-7qal65r08q.gz
-C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\obj\Debug\net10.0\compressed\e9ed62603n-{0}-h7j3dwwl1h-h7j3dwwl1h.gz
+C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\obj\Debug\net10.0\compressed\57291woz8s-{0}-r7ozfpgq1q-r7ozfpgq1q.gz
+C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\obj\Debug\net10.0\compressed\e9ed62603n-{0}-ak1xzrvwvk-ak1xzrvwvk.gz
