@@ -8,6 +8,7 @@ namespace Ugo.Orchestrator.Hubs;
 public record AgentMessage(string AgentName, string Thought, string Status, DateTime Timestamp);
 public record ApprovalRequestMessage(string Id, string Action, string Parameters, string Reason, DateTimeOffset RequestedAt);
 public record ApprovalDecisionMessage(string ApprovalId, bool Approved, DateTimeOffset DecidedAt);
+public record InternalTraceMessage(string Kind, string Source, string Content, string Status, DateTimeOffset Timestamp);
 
 public class AgentUgoHub : Hub
 {
@@ -23,6 +24,9 @@ public class AgentUgoHub : Hub
     /// </summary>
     public async Task BroadcastThought(AgentMessage message)
         => await Clients.All.SendAsync("ReceiveThought", message);
+
+    public async Task BroadcastInternalTrace(InternalTraceMessage trace)
+        => await Clients.All.SendAsync("ReceiveInternalTrace", trace);
 
     public Task SubmitApprovalDecision(string approvalId, bool approved)
         => _orchestrationService.UserDecisionReceivedAsync(approvalId, approved);

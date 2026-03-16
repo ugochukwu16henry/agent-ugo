@@ -110,11 +110,11 @@
                 <FluentDivider Role="DividerRole.Presentation" />
                 <div class="scroll-region terminal-region">
                     <FluentStack Orientation="Orientation.Vertical" Spacing="2">
-                        @foreach (var msg in LiveThoughts.OrderByDescending(m => m.Timestamp))
+                        @foreach (var line in BuildTerminalFeed())
                         {
                             <p class="terminal-line">
-                                [@msg.Timestamp.ToLocalTime().ToString("HH:mm:ss")] @msg.AgentName (@msg.Status):
-                                @msg.Thought
+                                [@line.Timestamp.ToLocalTime().ToString("HH:mm:ss")] @line.Source (@line.Status):
+                                @line.Content
                             </p>
                         }
                     </FluentStack>
@@ -127,6 +127,7 @@
 @code {
     private HubConnection? _hubConnection;
     private readonly List<AgentMessage> LiveThoughts = new();
+    private readonly List<InternalTraceMessage> InternalTraces = new();
     private readonly List<ApprovalRequestMessage> PendingApprovals = new();
     private readonly HashSet<string> _submittingApprovals = [];
 
@@ -146,6 +147,12 @@
         _hubConnection.On<AgentMessage>("ReceiveThought", msg =>
         {
             LiveThoughts.Insert(0, msg);
+            return InvokeAsync(StateHasChanged);
+        });
+
+        _hubConnection.On<InternalTraceMessage>("ReceiveInternalTrace", trace =>
+        {
+            InternalTraces.Insert(0, trace);
             return InvokeAsync(StateHasChanged);
         });
 
@@ -201,6 +208,17 @@ DateTime.Now));
         => msg.AgentName.Contains("ui", StringComparison.OrdinalIgnoreCase)
            || msg.AgentName.Contains("frontend", StringComparison.OrdinalIgnoreCase);
 
+    private IEnumerable<TerminalLine> BuildTerminalFeed()
+        => LiveThoughts
+            .Select(msg => new TerminalLine(msg.Timestamp, msg.AgentName, msg.Status, msg.Thought))
+            .Concat(InternalTraces.Select(trace => new TerminalLine(
+                trace.Timestamp.LocalDateTime,
+                $"Trace/{trace.Kind}",
+                trace.Status,
+                $"{trace.Source}: {trace.Content}")))
+            .OrderByDescending(line => line.Timestamp)
+            .Take(80);
+
     public async ValueTask DisposeAsync()
     {
         if (_hubConnection is not null)
@@ -220,4 +238,6 @@ DateTime.Now));
         public string Task { get; }
         public bool IsDone { get; set; }
     }
+
+    private sealed record TerminalLine(DateTime Timestamp, string Source, string Status, string Content);
 }

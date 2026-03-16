@@ -7,11 +7,13 @@ namespace Ugo.Orchestrator.Services;
 public sealed class OrchestrationService
 {
     private readonly IHubContext<AgentUgoHub> _hubContext;
+    private readonly TelemetryProvider _telemetryProvider;
     private readonly ConcurrentDictionary<string, TaskCompletionSource<bool>> _pendingApprovals = new();
 
-    public OrchestrationService(IHubContext<AgentUgoHub> hubContext)
+    public OrchestrationService(IHubContext<AgentUgoHub> hubContext, TelemetryProvider telemetryProvider)
     {
         _hubContext = hubContext;
+        _telemetryProvider = telemetryProvider;
     }
 
     public async Task ExecuteTaskWithSafety(string userGoal, CancellationToken cancellationToken = default)
@@ -30,6 +32,13 @@ public sealed class OrchestrationService
             action: actionName,
             parameters: userGoal,
             reason: "Agent Ugo wants to modify the codebase and needs explicit human approval.",
+            cancellationToken: cancellationToken);
+
+        await _telemetryProvider.TrackToolCallAsync(
+            toolName: actionName,
+            arguments: userGoal,
+            status: approved ? "Approved" : "Rejected",
+            resultSummary: approved ? "Human approved the critical tool call." : "Human rejected the critical tool call.",
             cancellationToken: cancellationToken);
 
         await PublishThoughtAsync(
@@ -60,6 +69,13 @@ public sealed class OrchestrationService
             reason,
             DateTimeOffset.UtcNow);
 
+        await _telemetryProvider.TrackToolCallAsync(
+            toolName: action,
+            arguments: parameters,
+            status: "Awaiting Approval",
+            resultSummary: reason,
+            cancellationToken: cancellationToken);
+
         await _hubContext.Clients.All.SendAsync("ApprovalNeeded", request, cancellationToken);
 
         using var cancellationRegistration = cancellationToken.Register(() => decisionSource.TrySetCanceled(cancellationToken));
@@ -85,6 +101,12 @@ public sealed class OrchestrationService
 
         var resolution = new ApprovalDecisionMessage(approvalId, approved, DateTimeOffset.UtcNow);
         await _hubContext.Clients.All.SendAsync("ApprovalResolved", resolution, cancellationToken);
+        await _telemetryProvider.TrackToolCallAsync(
+            toolName: "approval_decision",
+            arguments: approvalId,
+            status: approved ? "Approved" : "Rejected",
+            resultSummary: approved ? "Human reviewer approved the pending action." : "Human reviewer rejected the pending action.",
+            cancellationToken: cancellationToken);
         await PublishThoughtAsync(
             "Director",
             approved ? "Critical action approved by human reviewer." : "Critical action rejected by human reviewer.",
@@ -92,9 +114,13 @@ public sealed class OrchestrationService
             cancellationToken);
     }
 
-    private Task PublishThoughtAsync(string agentName, string thought, string status, CancellationToken cancellationToken)
-        => _hubContext.Clients.All.SendAsync(
+    private async Task PublishThoughtAsync(string agentName, string thought, string status, CancellationToken cancellationToken)
+    {
+        await _telemetryProvider.TrackLlmThoughtAsync(agentName, thought, status, cancellationToken);
+
+        await _hubContext.Clients.All.SendAsync(
             "ReceiveThought",
             new AgentMessage(agentName, thought, status, DateTime.Now),
             cancellationToken);
+    }
 }

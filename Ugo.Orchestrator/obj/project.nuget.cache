@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "Mq6GdmPDGek=",
+  "dgSpecHash": "we1E06Lmy9Q=",
   "success": true,
   "projectFilePath": "C:\\Users\\Dell\\Documents\\agent-ugo\\Ugo.Orchestrator\\Ugo.Orchestrator.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Dell\\.nuget\\packages\\azure.ai.openai\\2.2.0-beta.1\\azure.ai.openai.2.2.0-beta.1.nupkg.sha512",
-    "C:\\Users\\Dell\\.nuget\\packages\\azure.core\\1.44.1\\azure.core.1.44.1.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\azure.core\\1.46.0\\azure.core.1.46.0.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\azure.monitor.opentelemetry.exporter\\1.4.0\\azure.monitor.opentelemetry.exporter.1.4.0.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\google.protobuf\\3.30.2\\google.protobuf.3.30.2.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\microsoft.agents.ai\\1.0.0-rc4\\microsoft.agents.ai.1.0.0-rc4.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\microsoft.agents.ai.abstractions\\1.0.0-rc4\\microsoft.agents.ai.abstractions.1.0.0-rc4.nupkg.sha512",
@@ -26,8 +27,14 @@
     "C:\\Users\\Dell\\.nuget\\packages\\microsoft.semantickernel.connectors.openai\\1.38.0\\microsoft.semantickernel.connectors.openai.1.38.0.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\microsoft.semantickernel.core\\1.38.0\\microsoft.semantickernel.core.1.38.0.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\openai\\2.2.0-beta.1\\openai.2.2.0-beta.1.nupkg.sha512",
-    "C:\\Users\\Dell\\.nuget\\packages\\system.clientmodel\\1.2.1\\system.clientmodel.1.2.1.nupkg.sha512",
-    "C:\\Users\\Dell\\.nuget\\packages\\system.memory.data\\6.0.0\\system.memory.data.6.0.0.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\opentelemetry\\1.12.0\\opentelemetry.1.12.0.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\opentelemetry.api\\1.12.0\\opentelemetry.api.1.12.0.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\opentelemetry.api.providerbuilderextensions\\1.12.0\\opentelemetry.api.providerbuilderextensions.1.12.0.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\opentelemetry.extensions.hosting\\1.12.0\\opentelemetry.extensions.hosting.1.12.0.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\opentelemetry.persistentstorage.abstractions\\1.0.1\\opentelemetry.persistentstorage.abstractions.1.0.1.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\opentelemetry.persistentstorage.filesystem\\1.0.1\\opentelemetry.persistentstorage.filesystem.1.0.1.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\system.clientmodel\\1.4.0\\system.clientmodel.1.4.0.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\system.memory.data\\6.0.1\\system.memory.data.6.0.1.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\system.numerics.tensors\\10.0.3\\system.numerics.tensors.10.0.3.nupkg.sha512"
   ],
   "logs": [

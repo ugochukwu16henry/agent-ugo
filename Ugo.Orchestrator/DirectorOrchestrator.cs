@@ -15,12 +15,18 @@ public sealed class DirectorOrchestrator
     private readonly AgentProfile _projectManagerAgent;
     private readonly TaskLedger _ledger;
     private readonly OrchestrationService? _orchestrationService;
+    private readonly TelemetryProvider? _telemetryProvider;
 
-    public DirectorOrchestrator(Kernel kernel, TaskLedger ledger, OrchestrationService? orchestrationService = null)
+    public DirectorOrchestrator(
+        Kernel kernel,
+        TaskLedger ledger,
+        OrchestrationService? orchestrationService = null,
+        TelemetryProvider? telemetryProvider = null)
     {
         _ = kernel;
         _ledger = ledger;
         _orchestrationService = orchestrationService;
+        _telemetryProvider = telemetryProvider;
 
         _researcherAgent = new AgentProfile(
             "Ugo_Researcher",
@@ -52,6 +58,15 @@ public sealed class DirectorOrchestrator
     /// </summary>
     public async Task<bool> HumanApprovalCheckpointAsync(string actionDescription)
     {
+        if (_telemetryProvider is not null)
+        {
+            await _telemetryProvider.TrackToolCallAsync(
+                toolName: "critical_operation",
+                arguments: actionDescription,
+                status: "Awaiting Approval",
+                resultSummary: "The Director is waiting for a human decision before continuing.");
+        }
+
         if (_orchestrationService is not null)
         {
             return await _orchestrationService.RequestApprovalAsync(
@@ -75,6 +90,11 @@ public sealed class DirectorOrchestrator
     /// </summary>
     public async Task RunParallelDevTaskAsync(string goal)
     {
+        if (_telemetryProvider is not null)
+        {
+            await _telemetryProvider.TrackLlmThoughtAsync("Director", $"Coordinating multi-agent goal: {goal}", "Working");
+        }
+
         // High-level planning and research
         var researchEntry = _ledger.AddTask(
             $"Research requirements for: {goal}",
@@ -139,17 +159,34 @@ public sealed class DirectorOrchestrator
                 AgentRole.Deployer,
                 TaskLifecycleState.Deploying);
 
+            if (_telemetryProvider is not null)
+            {
+                await _telemetryProvider.TrackToolCallAsync(
+                    toolName: "deploy_pipeline",
+                    arguments: goal,
+                    status: "Ready",
+                    resultSummary: "Deployment tasks were marked ready after approval.");
+            }
+
             // TODO: Proceed with MCP Tool calls for git and deployment here.
             _ledger.TryUpdateLifecycle(gitEntry.Id, TaskLifecycleState.Completed);
             _ledger.TryUpdateLifecycle(deployEntry.Id, TaskLifecycleState.Completed);
         }
     }
 
-    private static Task ExecuteAgentTaskAsync(AgentProfile agent, string taskDescription)
+    private async Task ExecuteAgentTaskAsync(AgentProfile agent, string taskDescription)
     {
-        _ = agent;
-        _ = taskDescription;
-        return Task.Delay(TimeSpan.FromMilliseconds(200));
+        if (_telemetryProvider is not null)
+        {
+            await _telemetryProvider.TrackLlmThoughtAsync(agent.Name, taskDescription, "Working");
+        }
+
+        await Task.Delay(TimeSpan.FromMilliseconds(200));
+
+        if (_telemetryProvider is not null)
+        {
+            await _telemetryProvider.TrackLlmThoughtAsync(agent.Name, $"Completed: {taskDescription}", "Success");
+        }
     }
 
     private sealed record AgentProfile(string Name, string Instructions);
