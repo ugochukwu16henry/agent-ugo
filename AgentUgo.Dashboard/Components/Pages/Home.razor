@@ -1,0 +1,48 @@
+@page "/"
+
+@using Microsoft.AspNetCore.SignalR.Client
+@using Ugo.Orchestrator.Hubs
+
+<PageTitle>Agent Ugo - Live Orchestration</PageTitle>
+
+<h1>Agent Ugo Orchestration Graph</h1>
+
+<p class="lead">Real-time thoughts from Ugo's specialized agents.</p>
+
+<div class="agent-grid">
+    @if (_messages.Count == 0)
+    {
+        <p class="muted">Waiting for agent activity...</p>
+    }
+    else
+    {
+        @foreach (var message in _messages.OrderByDescending(m => m.Timestamp).Take(12))
+        {
+            <AgentCard Message="message" />
+        }
+    }
+</div>
+
+@code {
+    private HubConnection? _hubConnection;
+    private readonly List<AgentMessage> _messages = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _hubConnection = new HubConnectionBuilder()
+            .WithUrl(Navigation.ToAbsoluteUri("/agentUgoHub"))
+            .WithAutomaticReconnect()
+            .Build();
+
+        _hubConnection.On<AgentMessage>("ReceiveThought", message =>
+        {
+            _messages.Add(message);
+            InvokeAsync(StateHasChanged);
+        });
+
+        await _hubConnection.StartAsync();
+    }
+
+    [Inject]
+    private NavigationManager Navigation { get; set; } = default!;
+}

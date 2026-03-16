@@ -1,0 +1,18 @@
+@using Ugo.Orchestrator.Hubs
+
+<div class="agent-card glass-card">
+    <div class="agent-header">
+        <span class="agent-name">@Message.AgentName</span>
+        <span class="agent-status">@Message.Status</span>
+    </div>
+    <div class="agent-body">
+        <p>@Message.Thought</p>
+        <small>@Message.Timestamp.ToLocalTime().ToString("HH:mm:ss")</small>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public AgentMessage Message { get; set; } = default!;
+}
+
