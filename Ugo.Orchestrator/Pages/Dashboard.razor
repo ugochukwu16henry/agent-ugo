@@ -6,6 +6,7 @@
 @using Ugo.Orchestrator.Hubs
 @implements IAsyncDisposable
 @inject NavigationManager NavManager
+@inject PreviewService PreviewService
 
 <PageTitle>Agent Ugo | Command Center</PageTitle>
 
@@ -19,6 +20,24 @@
     </FluentHeader>
 
     <FluentGrid Class="dashboard-grid" Spacing="3" AdaptiveRendering="true">
+        <FluentGridItem xs="12" sm="12">
+            <FluentCard Appearance="Appearance.Glass" Class="panel-card">
+                <h4 class="panel-title">Live App Preview</h4>
+                <div class="preview-browser-frame">
+                    @if (!string.IsNullOrWhiteSpace(PreviewService.CurrentPreviewBase64))
+                    {
+                        <img src="data:image/png;base64,@PreviewService.CurrentPreviewBase64" class="preview-image"
+                             alt="Live preview capture" />
+                    }
+                    else
+                    {
+                        <FluentProgressRing />
+                        <p class="muted-copy">Loading Agent Ugo's UI build preview...</p>
+                    }
+                </div>
+            </FluentCard>
+        </FluentGridItem>
+
         <FluentGridItem xs="12" sm="4" md="4">
             <FluentCard Appearance="Appearance.Glass" Class="panel-card">
                 <h4 class="panel-title">Human Approval Queue</h4>
@@ -153,6 +172,18 @@
         _hubConnection.On<InternalTraceMessage>("ReceiveInternalTrace", trace =>
         {
             InternalTraces.Insert(0, trace);
+            return InvokeAsync(StateHasChanged);
+        });
+
+        _hubConnection.On<PreviewFrameMessage>("ReceivePreviewFrame", frame =>
+        {
+            PreviewService.UpdatePreview(frame.Base64Png);
+            InternalTraces.Insert(0, new InternalTraceMessage(
+                "Preview",
+                "CapturePreview",
+                $"Frame captured from {frame.SourceUrl}",
+                "Success",
+                frame.CapturedAt));
             return InvokeAsync(StateHasChanged);
         });
 

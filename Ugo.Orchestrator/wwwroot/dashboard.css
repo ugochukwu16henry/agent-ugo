@@ -62,6 +62,25 @@
     letter-spacing: 0.01em;
 }
 
+.preview-browser-frame {
+    min-height: 18rem;
+    display: grid;
+    place-items: center;
+    gap: 0.75rem;
+    border: 1px solid var(--neutral-stroke-rest);
+    border-radius: 0.85rem;
+    background: var(--neutral-layer-3);
+    padding: 0.75rem;
+}
+
+.preview-image {
+    width: 100%;
+    max-height: 28rem;
+    object-fit: contain;
+    border-radius: 0.5rem;
+    border: 1px solid var(--neutral-stroke-rest);
+}
+
 .section-title {
     margin: 0.875rem 0 0.5rem 0;
     font-weight: 600;

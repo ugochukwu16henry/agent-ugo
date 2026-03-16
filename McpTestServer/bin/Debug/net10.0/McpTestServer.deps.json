@@ -8,9 +8,15 @@
     ".NETCoreApp,Version=v10.0": {
       "McpTestServer/1.0.0": {
         "dependencies": {
+          "ClosedXML": "0.105.0",
+          "Microsoft.AspNetCore.SignalR.Client": "10.0.0",
+          "Microsoft.Extensions.AI": "10.4.0",
           "Microsoft.Extensions.Hosting": "10.0.5",
+          "Microsoft.Playwright": "1.58.0",
           "Microsoft.SemanticKernel": "1.38.0",
           "ModelContextProtocol": "1.0.0",
+          "OpenAI": "2.9.1",
+          "QuestPDF": "2026.2.3",
           "Ugo.Orchestrator": "1.0.0"
         },
         "runtime": {
@@ -19,8 +25,8 @@
       },
       "Azure.AI.OpenAI/2.2.0-beta.1": {
         "dependencies": {
-          "Azure.Core": "1.44.1",
-          "OpenAI": "2.2.0-beta.1"
+          "Azure.Core": "1.46.0",
+          "OpenAI": "2.9.1"
         },
         "runtime": {
           "lib/netstandard2.0/Azure.AI.OpenAI.dll": {
@@ -29,16 +35,83 @@
           }
         }
       },
-      "Azure.Core/1.44.1": {
+      "Azure.Core/1.46.0": {
         "dependencies": {
           "Microsoft.Bcl.AsyncInterfaces": "8.0.0",
-          "System.ClientModel": "1.2.1",
-          "System.Memory.Data": "6.0.0"
+          "System.ClientModel": "1.9.0",
+          "System.Memory.Data": "10.0.1"
         },
         "runtime": {
-          "lib/net6.0/Azure.Core.dll": {
-            "assemblyVersion": "1.44.1.0",
-            "fileVersion": "1.4400.124.50905"
+          "lib/net8.0/Azure.Core.dll": {
+            "assemblyVersion": "1.46.0.0",
+            "fileVersion": "1.4600.25.25604"
+          }
+        }
+      },
+      "Azure.Monitor.OpenTelemetry.Exporter/1.4.0": {
+        "dependencies": {
+          "Azure.Core": "1.46.0",
+          "OpenTelemetry": "1.12.0",
+          "OpenTelemetry.Extensions.Hosting": "1.12.0",
+          "OpenTelemetry.PersistentStorage.FileSystem": "1.0.1"
+        },
+        "runtime": {
+          "lib/net8.0/Azure.Monitor.OpenTelemetry.Exporter.dll": {
+            "assemblyVersion": "1.4.0.0",
+            "fileVersion": "1.400.25.25902"
+          }
+        }
+      },
+      "ClosedXML/0.105.0": {
+        "dependencies": {
+          "ClosedXML.Parser": "2.0.0",
+          "DocumentFormat.OpenXml": "3.1.1",
+          "ExcelNumberFormat": "1.1.0",
+          "RBush.Signed": "4.0.0",
+          "SixLabors.Fonts": "1.0.0"
+        },
+        "runtime": {
+          "lib/netstandard2.1/ClosedXML.dll": {
+            "assemblyVersion": "0.105.0.0",
+            "fileVersion": "0.105.0.0"
+          }
+        }
+      },
+      "ClosedXML.Parser/2.0.0": {
+        "runtime": {
+          "lib/netstandard2.1/ClosedXML.Parser.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "DocumentFormat.OpenXml/3.1.1": {
+        "dependencies": {
+          "DocumentFormat.OpenXml.Framework": "3.1.1"
+        },
+        "runtime": {
+          "lib/net8.0/DocumentFormat.OpenXml.dll": {
+            "assemblyVersion": "3.1.1.0",
+            "fileVersion": "3.1.1.0"
+          }
+        }
+      },
+      "DocumentFormat.OpenXml.Framework/3.1.1": {
+        "dependencies": {
+          "System.IO.Packaging": "8.0.1"
+        },
+        "runtime": {
+          "lib/net8.0/DocumentFormat.OpenXml.Framework.dll": {
+            "assemblyVersion": "3.1.1.0",
+            "fileVersion": "3.1.1.0"
+          }
+        }
+      },
+      "ExcelNumberFormat/1.1.0": {
+        "runtime": {
+          "lib/netstandard2.0/ExcelNumberFormat.dll": {
+            "assemblyVersion": "1.1.0.0",
+            "fileVersion": "1.1.0.0"
           }
         }
       },
@@ -53,8 +126,8 @@
       "Microsoft.Agents.AI/1.0.0-rc4": {
         "dependencies": {
           "Microsoft.Agents.AI.Abstractions": "1.0.0-rc4",
-          "Microsoft.Extensions.AI": "10.3.0",
-          "Microsoft.Extensions.AI.Abstractions": "10.3.0",
+          "Microsoft.Extensions.AI": "10.4.0",
+          "Microsoft.Extensions.AI.Abstractions": "10.4.0",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.5",
           "Microsoft.Extensions.Logging.Abstractions": "10.0.5",
           "Microsoft.Extensions.VectorData.Abstractions": "9.7.0",
@@ -69,7 +142,7 @@
       },
       "Microsoft.Agents.AI.Abstractions/1.0.0-rc4": {
         "dependencies": {
-          "Microsoft.Extensions.AI.Abstractions": "10.3.0",
+          "Microsoft.Extensions.AI.Abstractions": "10.4.0",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.5",
           "Microsoft.Extensions.Logging.Abstractions": "10.0.5"
         },
@@ -132,25 +205,37 @@
           }
         }
       },
-      "Microsoft.Extensions.AI/10.3.0": {
+      "Microsoft.Extensions.AI/10.4.0": {
         "dependencies": {
-          "Microsoft.Extensions.AI.Abstractions": "10.3.0",
+          "Microsoft.Extensions.AI.Abstractions": "10.4.0",
+          "Microsoft.Extensions.Caching.Abstractions": "10.0.4",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.5",
           "Microsoft.Extensions.Logging.Abstractions": "10.0.5",
-          "System.Numerics.Tensors": "10.0.3"
+          "System.Numerics.Tensors": "10.0.4"
         },
         "runtime": {
           "lib/net10.0/Microsoft.Extensions.AI.dll": {
-            "assemblyVersion": "10.3.0.0",
-            "fileVersion": "10.300.26.10911"
+            "assemblyVersion": "10.4.0.0",
+            "fileVersion": "10.400.26.16002"
           }
         }
       },
-      "Microsoft.Extensions.AI.Abstractions/10.3.0": {
+      "Microsoft.Extensions.AI.Abstractions/10.4.0": {
         "runtime": {
           "lib/net10.0/Microsoft.Extensions.AI.Abstractions.dll": {
-            "assemblyVersion": "10.3.0.0",
-            "fileVersion": "10.300.26.10911"
+            "assemblyVersion": "10.4.0.0",
+            "fileVersion": "10.400.26.16002"
+          }
+        }
+      },
+      "Microsoft.Extensions.Caching.Abstractions/10.0.4": {
+        "dependencies": {
+          "Microsoft.Extensions.Primitives": "10.0.5"
+        },
+        "runtime": {
+          "lib/net10.0/Microsoft.Extensions.Caching.Abstractions.dll": {
+            "assemblyVersion": "10.0.0.0",
+            "fileVersion": "10.0.426.12010"
           }
         }
       },
@@ -516,7 +601,7 @@
       },
       "Microsoft.Extensions.VectorData.Abstractions/9.7.0": {
         "dependencies": {
-          "Microsoft.Extensions.AI.Abstractions": "10.3.0"
+          "Microsoft.Extensions.AI.Abstractions": "10.4.0"
         },
         "runtime": {
           "lib/net8.0/Microsoft.Extensions.VectorData.Abstractions.dll": {
@@ -548,6 +633,17 @@
           }
         }
       },
+      "Microsoft.Playwright/1.58.0": {
+        "dependencies": {
+          "Microsoft.Bcl.AsyncInterfaces": "8.0.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Playwright.dll": {
+            "assemblyVersion": "1.58.0.0",
+            "fileVersion": "1.58.0.0"
+          }
+        }
+      },
       "Microsoft.SemanticKernel/1.38.0": {
         "dependencies": {
           "Microsoft.SemanticKernel.Connectors.AzureOpenAI": "1.38.0",
@@ -564,7 +660,7 @@
         "dependencies": {
           "Microsoft.Bcl.AsyncInterfaces": "8.0.0",
           "Microsoft.Bcl.HashCode": "1.1.1",
-          "Microsoft.Extensions.AI.Abstractions": "10.3.0",
+          "Microsoft.Extensions.AI.Abstractions": "10.4.0",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.5",
           "Microsoft.Extensions.Logging.Abstractions": "10.0.5",
           "Microsoft.Extensions.VectorData.Abstractions": "9.7.0"
@@ -592,7 +688,7 @@
       "Microsoft.SemanticKernel.Connectors.OpenAI/1.38.0": {
         "dependencies": {
           "Microsoft.SemanticKernel.Core": "1.38.0",
-          "OpenAI": "2.2.0-beta.1"
+          "OpenAI": "2.9.1"
         },
         "runtime": {
           "lib/net8.0/Microsoft.SemanticKernel.Connectors.OpenAI.dll": {
@@ -605,7 +701,7 @@
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection": "10.0.5",
           "Microsoft.SemanticKernel.Abstractions": "1.38.0",
-          "System.Numerics.Tensors": "10.0.3"
+          "System.Numerics.Tensors": "10.0.4"
         },
         "runtime": {
           "lib/net8.0/Microsoft.SemanticKernel.Core.dll": {
@@ -616,6 +712,7 @@
       },
       "ModelContextProtocol/1.0.0": {
         "dependencies": {
+          "Microsoft.Extensions.Caching.Abstractions": "10.0.4",
           "Microsoft.Extensions.Hosting.Abstractions": "10.0.5",
           "ModelContextProtocol.Core": "1.0.0"
         },
@@ -628,7 +725,7 @@
       },
       "ModelContextProtocol.Core/1.0.0": {
         "dependencies": {
-          "Microsoft.Extensions.AI.Abstractions": "10.3.0",
+          "Microsoft.Extensions.AI.Abstractions": "10.4.0",
           "Microsoft.Extensions.Logging.Abstractions": "10.0.5"
         },
         "runtime": {
@@ -638,25 +735,228 @@
           }
         }
       },
-      "OpenAI/2.2.0-beta.1": {
+      "OpenAI/2.9.1": {
         "dependencies": {
-          "System.ClientModel": "1.2.1"
+          "System.ClientModel": "1.9.0"
         },
         "runtime": {
-          "lib/net8.0/OpenAI.dll": {
-            "assemblyVersion": "2.2.0.0",
-            "fileVersion": "2.2.0.0"
+          "lib/net10.0/OpenAI.dll": {
+            "assemblyVersion": "2.9.1.0",
+            "fileVersion": "2.9.1.0"
           }
         }
       },
-      "System.ClientModel/1.2.1": {
+      "OpenTelemetry/1.12.0": {
         "dependencies": {
-          "System.Memory.Data": "6.0.0"
+          "Microsoft.Extensions.Diagnostics.Abstractions": "10.0.5",
+          "Microsoft.Extensions.Logging.Configuration": "10.0.5",
+          "OpenTelemetry.Api.ProviderBuilderExtensions": "1.12.0"
         },
         "runtime": {
-          "lib/net6.0/System.ClientModel.dll": {
-            "assemblyVersion": "1.2.1.0",
-            "fileVersion": "1.200.124.50905"
+          "lib/net9.0/OpenTelemetry.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.12.0.1644"
+          }
+        }
+      },
+      "OpenTelemetry.Api/1.12.0": {
+        "runtime": {
+          "lib/net9.0/OpenTelemetry.Api.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.12.0.1644"
+          }
+        }
+      },
+      "OpenTelemetry.Api.ProviderBuilderExtensions/1.12.0": {
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.5",
+          "OpenTelemetry.Api": "1.12.0"
+        },
+        "runtime": {
+          "lib/net9.0/OpenTelemetry.Api.ProviderBuilderExtensions.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.12.0.1644"
+          }
+        }
+      },
+      "OpenTelemetry.Extensions.Hosting/1.12.0": {
+        "dependencies": {
+          "Microsoft.Extensions.Hosting.Abstractions": "10.0.5",
+          "OpenTelemetry": "1.12.0"
+        },
+        "runtime": {
+          "lib/net9.0/OpenTelemetry.Extensions.Hosting.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.12.0.1644"
+          }
+        }
+      },
+      "OpenTelemetry.PersistentStorage.Abstractions/1.0.1": {
+        "runtime": {
+          "lib/netstandard2.0/OpenTelemetry.PersistentStorage.Abstractions.dll": {
+            "assemblyVersion": "1.0.1.378",
+            "fileVersion": "1.0.1.378"
+          }
+        }
+      },
+      "OpenTelemetry.PersistentStorage.FileSystem/1.0.1": {
+        "dependencies": {
+          "OpenTelemetry.PersistentStorage.Abstractions": "1.0.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/OpenTelemetry.PersistentStorage.FileSystem.dll": {
+            "assemblyVersion": "1.0.1.378",
+            "fileVersion": "1.0.1.378"
+          }
+        }
+      },
+      "QuestPDF/2026.2.3": {
+        "runtime": {
+          "lib/net10.0/QuestPDF.dll": {
+            "assemblyVersion": "2026.2.3.0",
+            "fileVersion": "2026.2.3.0"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/linux-arm64/native/libQuestPdfSkia.so": {
+            "rid": "linux-arm64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/linux-arm64/native/libqpdf.so": {
+            "rid": "linux-arm64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/linux-musl-x64/native/libQuestPdfSkia.so": {
+            "rid": "linux-musl-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/linux-musl-x64/native/libqpdf.so": {
+            "rid": "linux-musl-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/linux-x64/native/libQuestPdfSkia.so": {
+            "rid": "linux-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/linux-x64/native/libqpdf.so": {
+            "rid": "linux-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/osx-arm64/native/libQuestPdfSkia.dylib": {
+            "rid": "osx-arm64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/osx-arm64/native/libqpdf.dylib": {
+            "rid": "osx-arm64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/osx-x64/native/libQuestPdfSkia.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/osx-x64/native/libqpdf.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x64/native/QuestPdfSkia.dll": {
+            "rid": "win-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x64/native/libgcc_s_seh-1.dll": {
+            "rid": "win-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x64/native/libstdc++-6.dll": {
+            "rid": "win-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x64/native/libwinpthread-1.dll": {
+            "rid": "win-x64",
+            "assetType": "native",
+            "fileVersion": "1.0.0.0"
+          },
+          "runtimes/win-x64/native/qpdf.dll": {
+            "rid": "win-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x64/native/zlib1.dll": {
+            "rid": "win-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x86/native/QuestPdfSkia.dll": {
+            "rid": "win-x86",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x86/native/libgcc_s_dw2-1.dll": {
+            "rid": "win-x86",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x86/native/libstdc++-6.dll": {
+            "rid": "win-x86",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x86/native/libwinpthread-1.dll": {
+            "rid": "win-x86",
+            "assetType": "native",
+            "fileVersion": "1.0.0.0"
+          },
+          "runtimes/win-x86/native/qpdf.dll": {
+            "rid": "win-x86",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x86/native/zlib1.dll": {
+            "rid": "win-x86",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "RBush.Signed/4.0.0": {
+        "runtime": {
+          "lib/net8.0/RBush.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.0.0.0"
+          }
+        }
+      },
+      "SixLabors.Fonts/1.0.0": {
+        "runtime": {
+          "lib/netcoreapp3.1/SixLabors.Fonts.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "System.ClientModel/1.9.0": {
+        "dependencies": {
+          "Microsoft.Extensions.Configuration.Abstractions": "10.0.5",
+          "Microsoft.Extensions.Hosting.Abstractions": "10.0.5",
+          "Microsoft.Extensions.Logging.Abstractions": "10.0.5",
+          "System.Memory.Data": "10.0.1"
+        },
+        "runtime": {
+          "lib/net10.0/System.ClientModel.dll": {
+            "assemblyVersion": "1.9.0.0",
+            "fileVersion": "1.900.26.7706"
           }
         }
       },
@@ -676,28 +976,38 @@
           }
         }
       },
-      "System.Memory.Data/6.0.0": {
+      "System.IO.Packaging/8.0.1": {
         "runtime": {
-          "lib/net6.0/System.Memory.Data.dll": {
-            "assemblyVersion": "6.0.0.0",
-            "fileVersion": "6.0.21.52210"
+          "lib/net8.0/System.IO.Packaging.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.1024.46610"
           }
         }
       },
-      "System.Numerics.Tensors/10.0.3": {
+      "System.Memory.Data/10.0.1": {
+        "runtime": {
+          "lib/net10.0/System.Memory.Data.dll": {
+            "assemblyVersion": "10.0.0.1",
+            "fileVersion": "10.0.125.57005"
+          }
+        }
+      },
+      "System.Numerics.Tensors/10.0.4": {
         "runtime": {
           "lib/net10.0/System.Numerics.Tensors.dll": {
-            "assemblyVersion": "10.0.0.3",
-            "fileVersion": "10.0.326.7603"
+            "assemblyVersion": "10.0.0.4",
+            "fileVersion": "10.0.426.12010"
           }
         }
       },
       "Ugo.Orchestrator/1.0.0": {
         "dependencies": {
+          "Azure.Monitor.OpenTelemetry.Exporter": "1.4.0",
           "Microsoft.Agents.AI": "1.0.0-rc4",
           "Microsoft.AspNetCore.SignalR.Client": "10.0.0",
           "Microsoft.FluentUI.AspNetCore.Components": "4.13.0",
-          "Microsoft.SemanticKernel": "1.38.0"
+          "Microsoft.SemanticKernel": "1.38.0",
+          "OpenTelemetry.Extensions.Hosting": "1.12.0"
         },
         "runtime": {
           "Ugo.Orchestrator.dll": {
@@ -721,12 +1031,54 @@
       "path": "azure.ai.openai/2.2.0-beta.1",
       "hashPath": "azure.ai.openai.2.2.0-beta.1.nupkg.sha512"
     },
-    "Azure.Core/1.44.1": {
+    "Azure.Core/1.46.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-YyznXLQZCregzHvioip07/BkzjuWNXogJEVz9T5W6TwjNr17ax41YGzYMptlo2G10oLCuVPoyva62y0SIRDixg==",
-      "path": "azure.core/1.44.1",
-      "hashPath": "azure.core.1.44.1.nupkg.sha512"
+      "sha512": "sha512-MNFRFDHqUBZkeViSrDX6bPfQhXsydKJXu64AntycIzSG+nemh39XCkhDvjES0uisJlHsVex/tmkfA2ZQt913DQ==",
+      "path": "azure.core/1.46.0",
+      "hashPath": "azure.core.1.46.0.nupkg.sha512"
+    },
+    "Azure.Monitor.OpenTelemetry.Exporter/1.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-oG4JO4uvtTibh83syZFgBCbWyKbbhrmGyyFnmzUMO7tmgrRdSdD4PHe8+TKdPZ7hNAVjySuColO6aJzbncZ02w==",
+      "path": "azure.monitor.opentelemetry.exporter/1.4.0",
+      "hashPath": "azure.monitor.opentelemetry.exporter.1.4.0.nupkg.sha512"
+    },
+    "ClosedXML/0.105.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-U0hAdnYyPvF7TqHMFloxrS7pmozab79tFFF4c/bgPtqeelUs7ILpUd3r3c7C0a/DXsUZb3k1n4Pf7Q2LMyMQOg==",
+      "path": "closedxml/0.105.0",
+      "hashPath": "closedxml.0.105.0.nupkg.sha512"
+    },
+    "ClosedXML.Parser/2.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ngTqjYreDYNytG1W5d3ewHsw0ukmmrgV7EKnS4/40rXoYZGt07jrBvo+N+GxT49rcageUMUiprV0jYT4nwVBHQ==",
+      "path": "closedxml.parser/2.0.0",
+      "hashPath": "closedxml.parser.2.0.0.nupkg.sha512"
+    },
+    "DocumentFormat.OpenXml/3.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-2z9QBzeTLNNKWM9SaOSDMegfQk/7hDuElOsmF77pKZMkFRP/GHA/W/4yOAQD9kn15N/FsFxHn3QVYkatuZghiA==",
+      "path": "documentformat.openxml/3.1.1",
+      "hashPath": "documentformat.openxml.3.1.1.nupkg.sha512"
+    },
+    "DocumentFormat.OpenXml.Framework/3.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-6APEp/ElZV58S/4v8mf4Ke3ONEDORs64MqdD64Z7wWpcHANB9oovQsGIwtqjnKihulOj7T0a6IxHIHOfMqKOng==",
+      "path": "documentformat.openxml.framework/3.1.1",
+      "hashPath": "documentformat.openxml.framework.3.1.1.nupkg.sha512"
+    },
+    "ExcelNumberFormat/1.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-R3BVHPs9O+RkExbZYTGT0+9HLbi8ZrNij1Yziyw6znd3J7P3uoIR07uwTLGOogtz1p6+0sna66eBoXu7tBiVQA==",
+      "path": "excelnumberformat/1.1.0",
+      "hashPath": "excelnumberformat.1.1.0.nupkg.sha512"
     },
     "Google.Protobuf/3.30.2": {
       "type": "package",
@@ -784,19 +1136,26 @@
       "path": "microsoft.bcl.hashcode/1.1.1",
       "hashPath": "microsoft.bcl.hashcode.1.1.1.nupkg.sha512"
     },
-    "Microsoft.Extensions.AI/10.3.0": {
+    "Microsoft.Extensions.AI/10.4.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-zJYAHVM+zA74MNHifAyYE/jnfilI5WOnyQqnYobQZ5JW1VRSMGfQl/oqYdK3p2AdQOX8VcxSW6C+UsZYnpFB+A==",
-      "path": "microsoft.extensions.ai/10.3.0",
-      "hashPath": "microsoft.extensions.ai.10.3.0.nupkg.sha512"
+      "sha512": "sha512-7kKIuaUMFWikveZUjSrs53XfMVV7IDGSDaGp6/y/hV0HXsA7N2oIODZWxtEkEj8Q4cd/Oc/VlsVlg8efof7gFA==",
+      "path": "microsoft.extensions.ai/10.4.0",
+      "hashPath": "microsoft.extensions.ai.10.4.0.nupkg.sha512"
     },
-    "Microsoft.Extensions.AI.Abstractions/10.3.0": {
+    "Microsoft.Extensions.AI.Abstractions/10.4.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-hDjDvUERvUH3HBMs2MDusOcGJBjAHOG5pJIU2x/HZEa4e1UthNKt89cwMi3B+ogJo6skki1XFjfgGN3ksnVqvQ==",
-      "path": "microsoft.extensions.ai.abstractions/10.3.0",
-      "hashPath": "microsoft.extensions.ai.abstractions.10.3.0.nupkg.sha512"
+      "sha512": "sha512-t3S2H4do4YeNheIfE3GEl3MnKIrnxpbLu7a88spfApYR3in9ddhIq/GMtxgMaFjn/PUMTCFv5YH7Y6Q91dsDXQ==",
+      "path": "microsoft.extensions.ai.abstractions/10.4.0",
+      "hashPath": "microsoft.extensions.ai.abstractions.10.4.0.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Caching.Abstractions/10.0.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-uDRooaV6N3WZ0kdlNPMB68/MdGn/in1Fs7Db7DnIm85RBTPy4P321WO+daAImiYpH5dekjNggDqy1N44WaIlMA==",
+      "path": "microsoft.extensions.caching.abstractions/10.0.4",
+      "hashPath": "microsoft.extensions.caching.abstractions.10.0.4.nupkg.sha512"
     },
     "Microsoft.Extensions.Configuration/10.0.5": {
       "type": "package",
@@ -1008,6 +1367,13 @@
       "path": "microsoft.ml.tokenizers/2.0.0",
       "hashPath": "microsoft.ml.tokenizers.2.0.0.nupkg.sha512"
     },
+    "Microsoft.Playwright/1.58.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-LYLB00NUTzdY3NEN+fOQcxNuVALoGJMMWZYQINGBs4MfsKcTvr6WKoAmSsT5D4pPOOnN8uAyushEzoQ8qUEb0w==",
+      "path": "microsoft.playwright/1.58.0",
+      "hashPath": "microsoft.playwright.1.58.0.nupkg.sha512"
+    },
     "Microsoft.SemanticKernel/1.38.0": {
       "type": "package",
       "serviceable": true,
@@ -1057,19 +1423,82 @@
       "path": "modelcontextprotocol.core/1.0.0",
       "hashPath": "modelcontextprotocol.core.1.0.0.nupkg.sha512"
     },
-    "OpenAI/2.2.0-beta.1": {
+    "OpenAI/2.9.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-h0NKU7n5CppiyhZvcu6RtmrHUnN8IUpvbfCuEhFMPaeWKJIGEpRVP3PVywuJAqPugXp0zMFM3afFQFDQ8Sjiaw==",
-      "path": "openai/2.2.0-beta.1",
-      "hashPath": "openai.2.2.0-beta.1.nupkg.sha512"
+      "sha512": "sha512-KPTFYEt1EhrPeIZXGBE+DlutFEpMo/RspqSdUJ3p6pMqsw3NeGJcIja/K0He1j9KyRq8ASfzBgp2biWbNUGnFA==",
+      "path": "openai/2.9.1",
+      "hashPath": "openai.2.9.1.nupkg.sha512"
     },
-    "System.ClientModel/1.2.1": {
+    "OpenTelemetry/1.12.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-s9+M5El+DXdCRRLzxak8uGBKWT8H/eIssGpFtpaMKdJULrQbBDPH/zFbVyHX+NDczhS5EvjHFbBH9/L+0UhmcA==",
-      "path": "system.clientmodel/1.2.1",
-      "hashPath": "system.clientmodel.1.2.1.nupkg.sha512"
+      "sha512": "sha512-aIEu2O3xFOdwIVH0AJsIHPIMH1YuX18nzu7BHyaDNQ6NWSk4Zyrs9Pp6y8SATuSbvdtmvue4mj/QZ3838srbwA==",
+      "path": "opentelemetry/1.12.0",
+      "hashPath": "opentelemetry.1.12.0.nupkg.sha512"
+    },
+    "OpenTelemetry.Api/1.12.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Xt0qldi+iE2szGrM3jAqzEMEJd48YBtqI6mge0+ArXTZg3aTpRmyhL6CKKl3bLioaFSSVbBpEbPin8u6Z46Yrw==",
+      "path": "opentelemetry.api/1.12.0",
+      "hashPath": "opentelemetry.api.1.12.0.nupkg.sha512"
+    },
+    "OpenTelemetry.Api.ProviderBuilderExtensions/1.12.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-t6Vk1143BfiisCWYbRcyzkAuN6Aq5RkYtfOSMoqCIRMvtN9p1e1xzc0nWQ+fccNGOVgHn3aMK5xFn2+iWMcr8A==",
+      "path": "opentelemetry.api.providerbuilderextensions/1.12.0",
+      "hashPath": "opentelemetry.api.providerbuilderextensions.1.12.0.nupkg.sha512"
+    },
+    "OpenTelemetry.Extensions.Hosting/1.12.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-6/8O6rsJRwslg5/Fm3bscBelw4Yh9T9CN24p7cAsuEFkrmmeSO9gkYUCK02Qi+CmPM2KHYTLjKi0lJaCsDMWQA==",
+      "path": "opentelemetry.extensions.hosting/1.12.0",
+      "hashPath": "opentelemetry.extensions.hosting.1.12.0.nupkg.sha512"
+    },
+    "OpenTelemetry.PersistentStorage.Abstractions/1.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-LfXI2EoO7t2ku3hN6rIcUgqrdmNxKPG4pkgVa7Cakb9rlkmHYcqzMavLU5vy+G/txT+ZmLW9Z7TlptTqnrGEXg==",
+      "path": "opentelemetry.persistentstorage.abstractions/1.0.1",
+      "hashPath": "opentelemetry.persistentstorage.abstractions.1.0.1.nupkg.sha512"
+    },
+    "OpenTelemetry.PersistentStorage.FileSystem/1.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-RR1UziU+PYWYe+cwGZtSpdF43zv60GPP+WU0epR8xzZuA5FoxceCa+tYTh8iDqTYvy6F+jUzRe74dg/YAZ437Q==",
+      "path": "opentelemetry.persistentstorage.filesystem/1.0.1",
+      "hashPath": "opentelemetry.persistentstorage.filesystem.1.0.1.nupkg.sha512"
+    },
+    "QuestPDF/2026.2.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-el20n2otRqY6AXsijlwPcTf12A54vm2KucQZ67k+9N5htrzfsXaBxh+/gU44HhTS4kmRFdYerY6WE47ybHhFYA==",
+      "path": "questpdf/2026.2.3",
+      "hashPath": "questpdf.2026.2.3.nupkg.sha512"
+    },
+    "RBush.Signed/4.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-aP5KQxL5RnFNGW1f0euYVBfCatkLw5iEzMRJcXKq8LWWP4Cp3+qoSq1tDDL2vvJ2rM0ychmVMa2VaEKLS6uX4w==",
+      "path": "rbush.signed/4.0.0",
+      "hashPath": "rbush.signed.4.0.0.nupkg.sha512"
+    },
+    "SixLabors.Fonts/1.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-LFQsCZlV0xlUyXAOMUo5kkSl+8zAQXXbbdwWchtk0B4o7zotZhQsQOcJUELGHdfPfm/xDAsz6hONAuV25bJaAg==",
+      "path": "sixlabors.fonts/1.0.0",
+      "hashPath": "sixlabors.fonts.1.0.0.nupkg.sha512"
+    },
+    "System.ClientModel/1.9.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-1wdwKtMMMEFEYsxJmtrOd3G+7zVOVO3MlVZAsbKv9H0PnIx6J27fYAarMn0eQS0vKJPQL018DOb7YRK1O97p0A==",
+      "path": "system.clientmodel/1.9.0",
+      "hashPath": "system.clientmodel.1.9.0.nupkg.sha512"
     },
     "System.Diagnostics.EventLog/10.0.5": {
       "type": "package",
@@ -1078,19 +1507,26 @@
       "path": "system.diagnostics.eventlog/10.0.5",
       "hashPath": "system.diagnostics.eventlog.10.0.5.nupkg.sha512"
     },
-    "System.Memory.Data/6.0.0": {
+    "System.IO.Packaging/8.0.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-ntFHArH3I4Lpjf5m4DCXQHJuGwWPNVJPaAvM95Jy/u+2Yzt2ryiyIN04LAogkjP9DeRcEOiviAjQotfmPq/FrQ==",
-      "path": "system.memory.data/6.0.0",
-      "hashPath": "system.memory.data.6.0.0.nupkg.sha512"
+      "sha512": "sha512-KYkIOAvPexQOLDxPO2g0BVoWInnQhPpkFzRqvNrNrMhVT6kqhVr0zEb6KCHlptLFukxnZrjuMVAnxK7pOGUYrw==",
+      "path": "system.io.packaging/8.0.1",
+      "hashPath": "system.io.packaging.8.0.1.nupkg.sha512"
     },
-    "System.Numerics.Tensors/10.0.3": {
+    "System.Memory.Data/10.0.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-calKQ5nqV98lVRSCV7KFrlmw7nE7z6qIBWnMP+f7xAzY9H1cO15zJmkuZYM9RxYXDzQyI60/+dXd65UUY4HZFQ==",
-      "path": "system.numerics.tensors/10.0.3",
-      "hashPath": "system.numerics.tensors.10.0.3.nupkg.sha512"
+      "sha512": "sha512-BZC4mhdL569AXV56ep9YO6ShjhxFXGP7SwVX0Bc/e0dJPWnS6aBEXZJXqh64RVx8HquqWHkJUINBydLRQ1yq0g==",
+      "path": "system.memory.data/10.0.1",
+      "hashPath": "system.memory.data.10.0.1.nupkg.sha512"
+    },
+    "System.Numerics.Tensors/10.0.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-EK8wJVxnVfeCzchnEqVjIfZDpVIcmjfjUs9x1nzI41X2naPGT57QjoHlQJma2vDQUxEtPQiGv/v90mwcflx6mQ==",
+      "path": "system.numerics.tensors/10.0.4",
+      "hashPath": "system.numerics.tensors.10.0.4.nupkg.sha512"
     },
     "Ugo.Orchestrator/1.0.0": {
       "type": "project",

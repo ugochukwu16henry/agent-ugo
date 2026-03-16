@@ -100,7 +100,6 @@ C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\obj\Debug\net10.0\scopedcss\P
 C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\obj\Debug\net10.0\scopedcss\projectbundle\Ugo.Orchestrator.bundle.scp.css
 C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\obj\Debug\net10.0\compressed\57291woz8s-{0}-r7ozfpgq1q-r7ozfpgq1q.gz
 C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\obj\Debug\net10.0\compressed\e9ed62603n-{0}-ak1xzrvwvk-ak1xzrvwvk.gz
-C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\obj\Debug\net10.0\compressed\cdt5b5cf77-{0}-osllhi60wp-osllhi60wp.gz
 C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\bin\Debug\net10.0\Azure.Monitor.OpenTelemetry.Exporter.dll
 C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\bin\Debug\net10.0\OpenTelemetry.dll
 C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\bin\Debug\net10.0\OpenTelemetry.Api.dll
@@ -108,3 +107,4 @@ C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\bin\Debug\net10.0\OpenTelemet
 C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\bin\Debug\net10.0\OpenTelemetry.Extensions.Hosting.dll
 C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\bin\Debug\net10.0\OpenTelemetry.PersistentStorage.Abstractions.dll
 C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\bin\Debug\net10.0\OpenTelemetry.PersistentStorage.FileSystem.dll
+C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\obj\Debug\net10.0\compressed\cdt5b5cf77-{0}-984mihlv8h-984mihlv8h.gz

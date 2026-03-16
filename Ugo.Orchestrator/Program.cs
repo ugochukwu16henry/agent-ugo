@@ -20,6 +20,7 @@ builder.Services.AddSignalR();
 builder.Services.AddFluentUIComponents();
 builder.Services.AddSingleton<TaskLedger>();
 builder.Services.AddSingleton<Kernel>(_ => Kernel.CreateBuilder().Build());
+builder.Services.AddScoped<PreviewService>();
 builder.Services.AddSingleton<TelemetryProvider>();
 builder.Services.AddSingleton<OrchestrationService>();
 builder.Services.AddSingleton<DirectorOrchestrator>();
