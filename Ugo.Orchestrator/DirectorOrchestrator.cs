@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.SemanticKernel;
+using Ugo.Orchestrator.Core;
 using Ugo.Orchestrator.Services;
 
 namespace Ugo.Orchestrator;
@@ -16,17 +17,23 @@ public sealed class DirectorOrchestrator
     private readonly TaskLedger _ledger;
     private readonly OrchestrationService? _orchestrationService;
     private readonly TelemetryProvider? _telemetryProvider;
+    private readonly ThoughtCacheService? _thoughtCacheService;
+    private readonly FastExecutionEngine? _fastExecutionEngine;
 
     public DirectorOrchestrator(
         Kernel kernel,
         TaskLedger ledger,
         OrchestrationService? orchestrationService = null,
-        TelemetryProvider? telemetryProvider = null)
+        TelemetryProvider? telemetryProvider = null,
+        ThoughtCacheService? thoughtCacheService = null,
+        FastExecutionEngine? fastExecutionEngine = null)
     {
         _ = kernel;
         _ledger = ledger;
         _orchestrationService = orchestrationService;
         _telemetryProvider = telemetryProvider;
+        _thoughtCacheService = thoughtCacheService;
+        _fastExecutionEngine = fastExecutionEngine;
 
         _researcherAgent = new AgentProfile(
             "Ugo_Researcher",
@@ -129,6 +136,16 @@ public sealed class DirectorOrchestrator
 
         await Task.WhenAll(backendTask, frontendTask);
 
+        if (_fastExecutionEngine is not null)
+        {
+            await _fastExecutionEngine.ExecuteHyperSpeed(
+            [
+                new McpToolCall("ReadProjectFiles", "{\"scope\":\"backend\"}"),
+                new McpToolCall("GenerateWireframePreview", "{\"scope\":\"ui\"}"),
+                new McpToolCall("BuildSolution", "{\"configuration\":\"Debug\"}")
+            ]);
+        }
+
         _ledger.TryUpdateLifecycle(backendEntry.Id, TaskLifecycleState.WaitingForTests);
         _ledger.TryUpdateLifecycle(frontendEntry.Id, TaskLifecycleState.WaitingForTests);
 
@@ -174,8 +191,25 @@ public sealed class DirectorOrchestrator
         }
     }
 
-    private async Task ExecuteAgentTaskAsync(AgentProfile agent, string taskDescription)
+    private async Task<string> ExecuteAgentTaskAsync(AgentProfile agent, string taskDescription)
     {
+        if (_thoughtCacheService is not null)
+        {
+            var cacheHit = await _thoughtCacheService.FindNearestAsync(agent.Name, taskDescription, 0.95);
+            if (cacheHit is not null)
+            {
+                if (_telemetryProvider is not null)
+                {
+                    await _telemetryProvider.TrackLlmThoughtAsync(
+                        agent.Name,
+                        $"Instant-Thought cache hit ({cacheHit.Similarity:P1}) for: {taskDescription}",
+                        "Cached");
+                }
+
+                return cacheHit.Response;
+            }
+        }
+
         if (_telemetryProvider is not null)
         {
             await _telemetryProvider.TrackLlmThoughtAsync(agent.Name, taskDescription, "Working");
@@ -183,10 +217,19 @@ public sealed class DirectorOrchestrator
 
         await Task.Delay(TimeSpan.FromMilliseconds(200));
 
+        var llmResponse = $"Completed: {taskDescription}";
+
+        if (_thoughtCacheService is not null)
+        {
+            await _thoughtCacheService.UpsertAsync(agent.Name, taskDescription, llmResponse);
+        }
+
         if (_telemetryProvider is not null)
         {
-            await _telemetryProvider.TrackLlmThoughtAsync(agent.Name, $"Completed: {taskDescription}", "Success");
+            await _telemetryProvider.TrackLlmThoughtAsync(agent.Name, llmResponse, "Success");
         }
+
+        return llmResponse;
     }
 
     private sealed record AgentProfile(string Name, string Instructions);

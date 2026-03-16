@@ -1,5 +1,3 @@
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -12,7 +10,9 @@ var builder = Host.CreateEmptyApplicationBuilder(settings: null);
 builder.Services
     .AddMcpServer()
     .WithStdioServerTransport()
-    .WithToolsFromAssembly();
+    // Explicit, trim-friendly registration of known tools.
+    .WithTool<TestTools>()
+    .WithTool<MediaTools>();
 
 // Register the orchestration brain for Agent Ugo.
 builder.Services.AddSingleton<TaskLedger>();

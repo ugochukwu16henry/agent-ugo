@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "pwIlsQuuOrs=",
+  "dgSpecHash": "sm1K9j0/XHA=",
   "success": true,
   "projectFilePath": "C:\\Users\\Dell\\Documents\\agent-ugo\\McpTestServer\\McpTestServer.csproj",
   "expectedPackageFiles": [
@@ -30,6 +30,7 @@
     "C:\\Users\\Dell\\.nuget\\packages\\microsoft.aspnetcore.signalr.protocols.json\\10.0.0\\microsoft.aspnetcore.signalr.protocols.json.10.0.0.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\8.0.0\\microsoft.bcl.asyncinterfaces.8.0.0.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\microsoft.bcl.hashcode\\1.1.1\\microsoft.bcl.hashcode.1.1.1.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\microsoft.dotnet.ilcompiler\\10.0.3\\microsoft.dotnet.ilcompiler.10.0.3.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\microsoft.extensions.ai\\10.4.0\\microsoft.extensions.ai.10.4.0.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\microsoft.extensions.ai.abstractions\\10.4.0\\microsoft.extensions.ai.abstractions.10.4.0.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\10.0.4\\microsoft.extensions.caching.abstractions.10.0.4.nupkg.sha512",
@@ -67,6 +68,7 @@
     "C:\\Users\\Dell\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.13.0\\microsoft.fluentui.aspnetcore.components.4.13.0.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\microsoft.jsinterop\\10.0.0-rc.1.25451.107\\microsoft.jsinterop.10.0.0-rc.1.25451.107.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\microsoft.ml.tokenizers\\2.0.0\\microsoft.ml.tokenizers.2.0.0.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\microsoft.net.illink.tasks\\10.0.3\\microsoft.net.illink.tasks.10.0.3.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\microsoft.playwright\\1.58.0\\microsoft.playwright.1.58.0.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\microsoft.semantickernel\\1.38.0\\microsoft.semantickernel.1.38.0.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\microsoft.semantickernel.abstractions\\1.38.0\\microsoft.semantickernel.abstractions.1.38.0.nupkg.sha512",
@@ -84,13 +86,19 @@
     "C:\\Users\\Dell\\.nuget\\packages\\opentelemetry.persistentstorage.filesystem\\1.0.1\\opentelemetry.persistentstorage.filesystem.1.0.1.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\questpdf\\2026.2.3\\questpdf.2026.2.3.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\rbush.signed\\4.0.0\\rbush.signed.4.0.0.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\runtime.win-x64.microsoft.dotnet.ilcompiler\\10.0.3\\runtime.win-x64.microsoft.dotnet.ilcompiler.10.0.3.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\sixlabors.fonts\\1.0.0\\sixlabors.fonts.1.0.0.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\system.clientmodel\\1.9.0\\system.clientmodel.1.9.0.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\system.componentmodel.annotations\\5.0.0\\system.componentmodel.annotations.5.0.0.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\system.diagnostics.eventlog\\10.0.5\\system.diagnostics.eventlog.10.0.5.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\system.io.packaging\\8.0.1\\system.io.packaging.8.0.1.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\system.memory.data\\10.0.1\\system.memory.data.10.0.1.nupkg.sha512",
-    "C:\\Users\\Dell\\.nuget\\packages\\system.numerics.tensors\\10.0.4\\system.numerics.tensors.10.0.4.nupkg.sha512"
+    "C:\\Users\\Dell\\.nuget\\packages\\system.numerics.tensors\\10.0.4\\system.numerics.tensors.10.0.4.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\10.0.3\\microsoft.netcore.app.runtime.win-x64.10.0.3.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\10.0.3\\microsoft.windowsdesktop.app.runtime.win-x64.10.0.3.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\10.0.3\\microsoft.aspnetcore.app.runtime.win-x64.10.0.3.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\microsoft.netcore.app.runtime.nativeaot.win-x64\\10.0.3\\microsoft.netcore.app.runtime.nativeaot.win-x64.10.0.3.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\runtime.win-x64.microsoft.dotnet.ilcompiler\\10.0.3\\runtime.win-x64.microsoft.dotnet.ilcompiler.10.0.3.nupkg.sha512"
   ],
   "logs": [
     {
@@ -102,7 +110,8 @@
       "filePath": "C:\\Users\\Dell\\Documents\\agent-ugo\\McpTestServer\\McpTestServer.csproj",
       "libraryId": "OpenAI",
       "targetGraphs": [
-        "net10.0"
+        "net10.0",
+        "net10.0/win-x64"
       ]
     },
     {
@@ -114,7 +123,8 @@
       "filePath": "C:\\Users\\Dell\\Documents\\agent-ugo\\McpTestServer\\McpTestServer.csproj",
       "libraryId": "Microsoft.SemanticKernel.Core",
       "targetGraphs": [
-        "net10.0"
+        "net10.0",
+        "net10.0/win-x64"
       ]
     }
   ]
