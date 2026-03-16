@@ -16,9 +16,13 @@ public static class MediaTools
         _ = description;
 
         var normalizedType = string.IsNullOrWhiteSpace(assetType) ? "asset" : assetType.Trim().ToLowerInvariant();
-        var fileName = normalizedType == "logo"
-            ? "logo.png"
-            : $"{normalizedType}_{Guid.NewGuid():N}.png";
+        var fileName = normalizedType switch
+        {
+            "logo" => "logo.png",
+            "favicon" => "favicon.ico",
+            "ugo-bot-avatar" => "ugo-bot-avatar.png",
+            _ => $"{normalizedType}_{Guid.NewGuid():N}.png"
+        };
 
         var configuredOutput = Environment.GetEnvironmentVariable("AGENT_UGO_ASSET_OUTPUT_DIR");
         var assetDirectory = string.IsNullOrWhiteSpace(configuredOutput)
@@ -29,11 +33,43 @@ public static class MediaTools
 
         var fullPath = Path.Combine(assetDirectory, fileName);
 
-        const string placeholderPngBase64 = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIHWP4////fwAJ+wP9KobjigAAAABJRU5ErkJggg==";
-        var pngBytes = Convert.FromBase64String(placeholderPngBase64);
-        await File.WriteAllBytesAsync(fullPath, pngBytes);
+        var imageBytes = normalizedType == "favicon"
+            ? CreatePlaceholderIco()
+            : CreatePlaceholderPng();
+
+        await File.WriteAllBytesAsync(fullPath, imageBytes);
 
         return $"Asset generated successfully: {fullPath}";
+    }
+
+    private static byte[] CreatePlaceholderPng()
+    {
+        const string placeholderPngBase64 = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIHWP4////fwAJ+wP9KobjigAAAABJRU5ErkJggg==";
+        return Convert.FromBase64String(placeholderPngBase64);
+    }
+
+    private static byte[] CreatePlaceholderIco()
+    {
+        return
+        [
+            0x00, 0x00, 0x01, 0x00, 0x01, 0x00,
+            0x01, 0x01, 0x00, 0x00,
+            0x01, 0x00, 0x20, 0x00,
+            0x30, 0x00, 0x00, 0x00,
+            0x16, 0x00, 0x00, 0x00,
+            0x28, 0x00, 0x00, 0x00,
+            0x01, 0x00, 0x00, 0x00,
+            0x02, 0x00, 0x00, 0x00,
+            0x01, 0x00, 0x20, 0x00,
+            0x00, 0x00, 0x00, 0x00,
+            0x04, 0x00, 0x00, 0x00,
+            0x00, 0x00, 0x00, 0x00,
+            0x00, 0x00, 0x00, 0x00,
+            0x00, 0x00, 0x00, 0x00,
+            0x00, 0x00, 0x00, 0x00,
+            0xFF, 0xFF, 0x00, 0xFF,
+            0x00, 0x00, 0x00, 0x00
+        ];
     }
 
     [McpServerTool, Description("Creates a PDF document based on project data.")]

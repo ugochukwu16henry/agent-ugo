@@ -45,6 +45,14 @@
     background: var(--neutral-layer-3);
 }
 
+.header-avatar {
+    width: 1.8rem;
+    height: 1.8rem;
+    border-radius: 50%;
+    border: 1px solid var(--neutral-stroke-rest);
+    background: var(--neutral-layer-3);
+}
+
 .header-badge {
     padding-inline: 0.75rem;
     border-radius: 999px;
