@@ -56,10 +56,6 @@ body {
     font-size: 16px;
 }
 
-.codicon-comment-discussion::before { content: "💬"; }
-.codicon-files::before { content: "📁"; }
-.codicon-history::before { content: "🕘"; }
-
 .workbench-horizontal-splitter,
 .workbench-vertical-splitter {
     height: 100%;
