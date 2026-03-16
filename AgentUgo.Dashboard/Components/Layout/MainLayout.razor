@@ -1,10 +1,18 @@
 @inherits LayoutComponentBase
 
-<div class="page ugo-main-layout">
+<div class="ugo-app-wrapper">
     <main>
-        <header class="top-row px-4 ugo-main-header">
-            <h1 class="ugo-title">Agent Ugo Dashboard</h1>
-            <span class="ugo-subtitle">Real-Time Multi-Agent Orchestration</span>
+        <header class="ugo-main-header ugo-glass-card px-4">
+            <img src="logo.png" alt="Agent Ugo Logo" class="ugo-header-logo" />
+            <div class="ugo-header-text">
+                <h1 class="ugo-title">AGENT UGO</h1>
+                <span class="ugo-subtitle">Autonomous Engineering Orchestration</span>
+            </div>
+            <div class="ugo-header-spacer"></div>
+            <div class="status-pill">
+                <span class="pulse-dot"></span>
+                SYSTEM: ONLINE (v10.0.1)
+            </div>
         </header>
 
         <section class="content px-4 ugo-glass-card">
