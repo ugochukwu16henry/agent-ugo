@@ -1,10 +1,47 @@
 {
   "version": 2,
-  "dgSpecHash": "qGLAlVnbWh0=",
+  "dgSpecHash": "nZ9Ulp9FnjU=",
   "success": true,
   "projectFilePath": "C:\\Users\\Dell\\Documents\\agent-ugo\\AgentUgo.Dashboard\\AgentUgo.Dashboard.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Dell\\.nuget\\packages\\microsoft.aspnetcore.app.internal.assets\\10.0.3\\microsoft.aspnetcore.app.internal.assets.10.0.3.nupkg.sha512"
+    "C:\\Users\\Dell\\.nuget\\packages\\azure.ai.openai\\2.2.0-beta.1\\azure.ai.openai.2.2.0-beta.1.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\azure.core\\1.44.1\\azure.core.1.44.1.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\google.protobuf\\3.30.2\\google.protobuf.3.30.2.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\microsoft.agents.ai\\1.0.0-rc4\\microsoft.agents.ai.1.0.0-rc4.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\microsoft.agents.ai.abstractions\\1.0.0-rc4\\microsoft.agents.ai.abstractions.1.0.0-rc4.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\microsoft.aspnetcore.app.internal.assets\\10.0.3\\microsoft.aspnetcore.app.internal.assets.10.0.3.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\microsoft.aspnetcore.http.connections.client\\10.0.0\\microsoft.aspnetcore.http.connections.client.10.0.0.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\microsoft.aspnetcore.signalr.client\\10.0.0\\microsoft.aspnetcore.signalr.client.10.0.0.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\microsoft.aspnetcore.signalr.client.core\\10.0.0\\microsoft.aspnetcore.signalr.client.core.10.0.0.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\8.0.0\\microsoft.bcl.asyncinterfaces.8.0.0.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\microsoft.bcl.hashcode\\1.1.1\\microsoft.bcl.hashcode.1.1.1.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\microsoft.extensions.ai\\10.3.0\\microsoft.extensions.ai.10.3.0.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\microsoft.extensions.ai.abstractions\\10.3.0\\microsoft.extensions.ai.abstractions.10.3.0.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\microsoft.extensions.vectordata.abstractions\\9.7.0\\microsoft.extensions.vectordata.abstractions.9.7.0.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\microsoft.fluentui.aspnetcore.components\\4.13.0\\microsoft.fluentui.aspnetcore.components.4.13.0.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\microsoft.ml.tokenizers\\2.0.0\\microsoft.ml.tokenizers.2.0.0.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\microsoft.semantickernel\\1.38.0\\microsoft.semantickernel.1.38.0.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\microsoft.semantickernel.abstractions\\1.38.0\\microsoft.semantickernel.abstractions.1.38.0.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\microsoft.semantickernel.connectors.azureopenai\\1.38.0\\microsoft.semantickernel.connectors.azureopenai.1.38.0.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\microsoft.semantickernel.connectors.openai\\1.38.0\\microsoft.semantickernel.connectors.openai.1.38.0.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\microsoft.semantickernel.core\\1.38.0\\microsoft.semantickernel.core.1.38.0.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\openai\\2.2.0-beta.1\\openai.2.2.0-beta.1.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\system.clientmodel\\1.2.1\\system.clientmodel.1.2.1.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\system.memory.data\\6.0.0\\system.memory.data.6.0.0.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\system.numerics.tensors\\10.0.3\\system.numerics.tensors.10.0.3.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1904",
+      "level": "Warning",
+      "message": "Package 'Microsoft.SemanticKernel.Core' 1.38.0 has a known critical severity vulnerability, https://github.com/advisories/GHSA-2ww3-72rp-wpp4",
+      "projectPath": "C:\\Users\\Dell\\Documents\\agent-ugo\\AgentUgo.Dashboard\\AgentUgo.Dashboard.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\Users\\Dell\\Documents\\agent-ugo\\AgentUgo.Dashboard\\AgentUgo.Dashboard.csproj",
+      "libraryId": "Microsoft.SemanticKernel.Core",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    }
+  ]
 }
