@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AssetGenRunner")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+24e4ed56cb0091ba6325c669b3c7829785c3efa4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+93179f0b5ad962b59c469d3d4e4aed30b4e41b9e")]
 [assembly: System.Reflection.AssemblyProductAttribute("AssetGenRunner")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AssetGenRunner")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
