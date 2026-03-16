@@ -48,9 +48,21 @@
         "net10.0": {
           "targetAlias": "net10.0",
           "dependencies": {
+            "ClosedXML": {
+              "target": "Package",
+              "version": "[0.105.0, )"
+            },
+            "Microsoft.Extensions.AI": {
+              "target": "Package",
+              "version": "[10.4.0, )"
+            },
             "Microsoft.Extensions.Hosting": {
               "target": "Package",
               "version": "[10.0.5, )"
+            },
+            "Microsoft.Playwright": {
+              "target": "Package",
+              "version": "[1.58.0, )"
             },
             "Microsoft.SemanticKernel": {
               "target": "Package",
@@ -59,6 +71,14 @@
             "ModelContextProtocol": {
               "target": "Package",
               "version": "[1.0.0, )"
+            },
+            "OpenAI": {
+              "target": "Package",
+              "version": "[2.9.1, )"
+            },
+            "QuestPDF": {
+              "target": "Package",
+              "version": "[2026.2.3, )"
             }
           },
           "imports": [
@@ -395,6 +415,10 @@
         "net10.0": {
           "targetAlias": "net10.0",
           "dependencies": {
+            "Azure.Monitor.OpenTelemetry.Exporter": {
+              "target": "Package",
+              "version": "[1.4.0, )"
+            },
             "Microsoft.Agents.AI": {
               "target": "Package",
               "version": "[1.0.0-rc4, )"
@@ -416,6 +440,10 @@
             "Microsoft.SemanticKernel": {
               "target": "Package",
               "version": "[1.38.0, )"
+            },
+            "OpenTelemetry.Extensions.Hosting": {
+              "target": "Package",
+              "version": "[1.12.0, )"
             }
           },
           "imports": [
