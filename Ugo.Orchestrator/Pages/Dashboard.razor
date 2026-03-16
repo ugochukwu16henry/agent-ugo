@@ -9,8 +9,13 @@
 @inject NavigationManager NavManager
 @inject PreviewService PreviewService
 @inject TimeTravelService TimeTravelService
+@inject IJSRuntime JSRuntime
+@inject IWebHostEnvironment Env
 
 <PageTitle>Agent Ugo | Command Center</PageTitle>
+
+<UgoCommandPalette IsVisible="IsPaletteOpen"                   IsVisibleChanged="@(v => { IsPaletteOpen = v; StateHasChanged(); })"
+                   OnDirectorCommand="HandleDirectorCommandAsync"                   OnFileOpen="HandleFileOpenAsync" />
 
 <div class="ugo-workbench">
     <div class="activity-bar" aria-label="Activity Bar">
@@ -63,7 +68,7 @@
                                         @if (!string.IsNullOrWhiteSpace(PreviewService.CurrentPreviewBase64))
                                         {
                                             <img src="data:image/png;base64,@PreviewService.CurrentPreviewBase64"
-                                                 class="preview-image"                                             alt="Live preview capture" />
+                                                 class="preview-image" alt="Live preview capture" />
                                         }
                                         else
                                         {
@@ -131,6 +136,8 @@
 
 @code {
     private HubConnection? _hubConnection;
+    private bool IsPaletteOpen;
+    private DotNetObjectReference<Dashboard>? _dotNetRef;
     private readonly List<AgentMessage> LiveThoughts = new();
     private readonly List<InternalTraceMessage> InternalTraces = new();
     private readonly List<ApprovalRequestMessage> PendingApprovals = new();
@@ -266,8 +273,83 @@ trace.Status, $"{trace.Source}: {trace.Content}")))
             .OrderByDescending(line => line.Timestamp)
             .Take(80);
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _dotNetRef = DotNetObjectReference.Create(this);
+            await JSRuntime.InvokeVoidAsync("setupPaletteListener", _dotNetRef);
+        }
+    }
+
+    [JSInvokable]
+    public void TogglePalette()
+    {
+        IsPaletteOpen = !IsPaletteOpen;
+        StateHasChanged();
+    }
+
+    private async Task HandleDirectorCommandAsync(string command)
+    {
+        if (_hubConnection?.State == HubConnectionState.Connected)
+        {
+            await _hubConnection.InvokeAsync("DispatchDirectorCommand", command);
+        }
+        InternalTraces.Insert(0, new InternalTraceMessage(
+            "DirectorCommand", "CommandPalette", $"Dispatched: {command}", "Sent", DateTimeOffset.Now));
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task HandleFileOpenAsync(string fileName)
+    {
+        var safeName = Path.GetFileName(fileName);
+        var allowedExtensions = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+            { ".cs", ".razor", ".json", ".css", ".html", ".md", ".txt", ".js" };
+
+        if (!allowedExtensions.Contains(Path.GetExtension(safeName)))
+        {
+            InternalTraces.Insert(0, new InternalTraceMessage(
+                "FileOpen", "CommandPalette", $"Extension not allowed: {safeName}", "Error", DateTimeOffset.Now));
+            await InvokeAsync(StateHasChanged);
+            return;
+        }
+
+        var fullPath = Path.GetFullPath(Path.Combine(Env.ContentRootPath, safeName));
+        if (!fullPath.StartsWith(Env.ContentRootPath, StringComparison.OrdinalIgnoreCase))
+        {
+            InternalTraces.Insert(0, new InternalTraceMessage(
+                "FileOpen", "CommandPalette", "Path traversal rejected.", "Error", DateTimeOffset.Now));
+            await InvokeAsync(StateHasChanged);
+            return;
+        }
+
+        if (!File.Exists(fullPath))
+        {
+            InternalTraces.Insert(0, new InternalTraceMessage(
+                "FileOpen", "CommandPalette", $"File not found: {safeName}", "Error", DateTimeOffset.Now));
+            await InvokeAsync(StateHasChanged);
+            return;
+        }
+
+        try
+        {
+            var content = await File.ReadAllTextAsync(fullPath);
+            var preview = content.Length > 2000 ? content[..2000] + "\n... (truncated)" : content;
+            InternalTraces.Insert(0, new InternalTraceMessage(
+                "FileOpen", "CommandPalette", $"[{safeName}]\n{preview}", "Success", DateTimeOffset.Now));
+        }
+        catch (Exception ex)
+        {
+            InternalTraces.Insert(0, new InternalTraceMessage(
+                "FileOpen", "CommandPalette", $"Error reading {safeName}: {ex.Message}", "Error", DateTimeOffset.Now));
+        }
+
+        await InvokeAsync(StateHasChanged);
+    }
+
     public async ValueTask DisposeAsync()
     {
+        _dotNetRef?.Dispose();
         if (_hubConnection is not null)
         {
             await _hubConnection.DisposeAsync();

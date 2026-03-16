@@ -1,0 +1,269 @@
+@inject IJSRuntime JSRuntime
+
+@if (IsVisible)
+{
+    <div class="ugo-command-palette-backdrop" @onclick="ClosePalette">
+        <div class="ugo-command-palette" @onclick:stopPropagation="true">
+            <div class="palette-input-wrapper">
+                <i class="codicon @(IsDirectorMode ? "codicon-terminal" : "codicon-search") palette-prefix-icon"></i>
+                <input @ref="_paletteInput"                       value="@searchTerm"                       @oninput="OnSearchInput"                       @onkeydown="HandleKeyDown"
+                       placeholder="@(IsDirectorMode ? "Command to Director Agent... (Enter to send)" : "Type a command or search files...")" />
+            </div>
+
+            <div class="palette-results">
+                @if (IsDirectorMode && searchTerm.Length > 1)
+                {
+                    <div class="palette-item palette-item-director">
+                        <i class="codicon codicon-terminal"></i>
+                        <span class="command-name">Send to Director: "@searchTerm[1..].Trim()"</span>
+                        <span class="command-shortcut">Enter</span>
+                    </div>
+                }
+                else
+                {
+                    @foreach (var cmd in FilteredCommands)
+                    {
+                        <div class="palette-item @(cmd == SelectedCommand ? "selected" : "")"                             @onclick="() => ExecuteCommand(cmd)">
+                            <i class="codicon codicon-@cmd.Icon"></i>
+                            <span class="command-name">@cmd.Name</span>
+                            <span class="command-shortcut">@cmd.Shortcut</span>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+}
+
+<style>
+    .ugo-command-palette-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 1000;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding-top: 5vh;
+    }
+
+    .ugo-command-palette {
+        width: 620px;
+        background: var(--bg-sidebar, #1e1e1e);
+        border: 1px solid var(--border-color, #3c3c3c);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+        color: var(--text-main, #cccccc);
+        border-radius: 4px;
+        overflow: hidden;
+    }
+
+    .palette-input-wrapper {
+        display: flex;
+        align-items: center;
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--border-color, #3c3c3c);
+        gap: 8px;
+    }
+
+    .palette-prefix-icon {
+        font-size: 16px;
+        opacity: 0.7;
+        flex-shrink: 0;
+    }
+
+    .palette-input-wrapper input {
+        background: transparent;
+        border: none;
+        outline: none;
+        color: var(--text-bright, #ffffff);
+        width: 100%;
+        font-size: 14px;
+        font-family: var(--vscode-font-family, 'Segoe UI', sans-serif);
+    }
+
+    .palette-results {
+        max-height: 380px;
+        overflow-y: auto;
+    }
+
+    .palette-item {
+        padding: 8px 14px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 13px;
+        cursor: pointer;
+    }
+
+    .palette-item:hover,
+    .palette-item.selected {
+        background: var(--accent-blue, #0078d4);
+        color: #ffffff;
+    }
+
+    .palette-item-director {
+        background: rgba(0, 255, 157, 0.08);
+        border-left: 2px solid #00ff9d;
+        color: #00ff9d;
+    }
+
+    .palette-item-director:hover {
+        background: rgba(0, 255, 157, 0.18);
+    }
+
+    .palette-item .codicon {
+        flex-shrink: 0;
+        font-size: 15px;
+        opacity: 0.85;
+    }
+
+    .command-name {
+        flex: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .command-shortcut {
+        margin-left: auto;
+        opacity: 0.55;
+        font-size: 11px;
+        flex-shrink: 0;
+    }
+</style>
+
+@code {
+    [Parameter] public bool IsVisible { get; set; }
+    [Parameter] public EventCallback<bool> IsVisibleChanged { get; set; }
+    [Parameter] public EventCallback<string> OnDirectorCommand { get; set; }
+    [Parameter] public EventCallback<string> OnFileOpen { get; set; }
+
+    private ElementReference _paletteInput;
+    private string searchTerm = "";
+    private CommandItem? SelectedCommand;
+    private bool _wasVisible;
+
+    private bool IsDirectorMode => searchTerm.StartsWith('>');
+
+    private static readonly List<CommandItem> AllCommands =
+    [
+        new("Send Director Command", "terminal", "> ..."),
+        new("Open Chat Panel", "comment-discussion", ""),
+        new("Toggle Sidebar", "layout-sidebar-left", ""),
+        new("View History Timeline", "history", ""),
+        new("Fork Timeline", "git-branch", ""),
+        new("Rewind Last Checkpoint", "debug-step-back", ""),
+        new("Restart Orchestrator", "debug-restart", ""),
+        new("Open File", "file-code", ""),
+    ];
+
+    private IEnumerable<CommandItem> FilteredCommands =>
+        IsDirectorMode ? [] :
+        string.IsNullOrWhiteSpace(searchTerm) ? AllCommands :
+        AllCommands.Where(c => c.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)).Take(8);
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (IsVisible && !_wasVisible)
+        {
+            _wasVisible = true;
+            await JSRuntime.InvokeVoidAsync("focusPaletteInput", _paletteInput);
+        }
+        else if (!IsVisible)
+        {
+            _wasVisible = false;
+        }
+    }
+
+    private void OnSearchInput(ChangeEventArgs e)
+    {
+        searchTerm = e.Value?.ToString() ?? "";
+        SelectedCommand = null;
+    }
+
+    private async Task HandleKeyDown(KeyboardEventArgs e)
+    {
+        switch (e.Key)
+        {
+            case "Escape":
+                await ClosePalette();
+                break;
+            case "ArrowDown":
+                NavigateList(1);
+                break;
+            case "ArrowUp":
+                NavigateList(-1);
+                break;
+            case "Enter":
+                await ExecuteCurrentInput();
+                break;
+        }
+    }
+
+    private void NavigateList(int direction)
+    {
+        var list = FilteredCommands.ToList();
+        if (list.Count == 0) return;
+        var currentIndex = SelectedCommand is null ? -1 : list.IndexOf(SelectedCommand);
+        var newIndex = Math.Clamp(currentIndex + direction, 0, list.Count - 1);
+        SelectedCommand = list[newIndex];
+    }
+
+    private async Task ExecuteCurrentInput()
+    {
+        if (IsDirectorMode)
+        {
+            var command = searchTerm.Length > 1 ? searchTerm[1..].Trim() : "";
+            if (!string.IsNullOrWhiteSpace(command))
+            {
+                await OnDirectorCommand.InvokeAsync(command);
+                await ClosePalette();
+            }
+            return;
+        }
+
+        if (SelectedCommand is not null)
+        {
+            await ExecuteCommand(SelectedCommand);
+            return;
+        }
+
+        // Treat plain text as a file name search
+        if (!string.IsNullOrWhiteSpace(searchTerm))
+        {
+            await OnFileOpen.InvokeAsync(searchTerm.Trim());
+            await ClosePalette();
+        }
+    }
+
+    private async Task ExecuteCommand(CommandItem cmd)
+    {
+        if (cmd.Name == "Send Director Command")
+        {
+            // Switch to director mode — user types the actual command after the '>'
+            searchTerm = ">";
+            SelectedCommand = null;
+            await JSRuntime.InvokeVoidAsync("focusPaletteInput", _paletteInput);
+            return;
+        }
+
+        if (cmd.Name == "Open File" && !string.IsNullOrWhiteSpace(searchTerm))
+        {
+            await OnFileOpen.InvokeAsync(searchTerm.Trim());
+        }
+
+        await ClosePalette();
+    }
+
+    private async Task ClosePalette()
+    {
+        searchTerm = "";
+        SelectedCommand = null;
+        await IsVisibleChanged.InvokeAsync(false);
+    }
+
+    private sealed record CommandItem(string Name, string Icon, string Shortcut);
+}

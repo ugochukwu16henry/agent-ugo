@@ -1,0 +1,86 @@
+@inject IJSRuntime JS
+
+<div class="ugo-command-overlay @(IsOpen ? "open" : "closed")" @onkeydown="HandleKeyDown" tabindex="-1">
+    <div class="ugo-command-shell">
+        <input @bind="SearchText"
+               @bind:event="oninput"
+               placeholder="Type a command..."
+               class="ugo-command-input"
+               @onkeydown="HandleInputKeyDown" />
+
+        <FluentListbox Class="ugo-command-list" @bind-SelectedValue="SelectedCommand">
+            @foreach (var cmd in FilteredCommands)
+            {
+                <FluentOption Value="@cmd">@cmd</FluentOption>
+            }
+        </FluentListbox>
+    </div>
+</div>
+
+@code {
+    private bool IsOpen { get; set; }
+    private string SearchText { get; set; } = string.Empty;
+    private string? SelectedCommand { get; set; }
+
+    private readonly string[] AllCommands =
+    [
+        "Run Tests",
+        "Generate Logo",
+        "Rewind State"
+    ];
+
+    private IEnumerable<string> FilteredCommands =>
+        string.IsNullOrWhiteSpace(SearchText)
+            ? AllCommands
+            : AllCommands.Where(c => c.Contains(SearchText, StringComparison.OrdinalIgnoreCase));
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("document.addEventListener", "keydown",
+                DotNetObjectReference.Create(this),
+                nameof(HandleGlobalKey));
+        }
+    }
+
+    [JSInvokable]
+    public void HandleGlobalKey(KeyboardEventArgs e)
+    {
+        if (e.CtrlKey && (e.Key == "p" || e.Key == "P"))
+        {
+            IsOpen = true;
+            StateHasChanged();
+        }
+
+        if (IsOpen && e.Key == "Escape")
+        {
+            ClosePalette();
+        }
+    }
+
+    private void HandleKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Escape")
+        {
+            ClosePalette();
+        }
+    }
+
+    private void HandleInputKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Escape")
+        {
+            ClosePalette();
+        }
+    }
+
+    private void ClosePalette()
+    {
+        IsOpen = false;
+        SearchText = string.Empty;
+        SelectedCommand = null;
+        StateHasChanged();
+    }
+}
+

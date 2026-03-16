@@ -34,5 +34,16 @@ public class AgentUgoHub : Hub
 
     public Task SubmitApprovalDecision(string approvalId, bool approved)
         => _orchestrationService.UserDecisionReceivedAsync(approvalId, approved);
+
+    /// <summary>
+    /// Routes a user-typed command from the Command Palette to the Director Agent pipeline.
+    /// Broadcasts the directive as an observable thought so all connected clients can see it.
+    /// Wire to <see cref="OrchestrationService"/> when Director AI processing is ready.
+    /// </summary>
+    public async Task DispatchDirectorCommand(string command)
+    {
+        var msg = new AgentMessage("User \u2192 Director", command, "Command", DateTime.UtcNow);
+        await Clients.All.SendAsync("ReceiveThought", msg);
+    }
 }
 
