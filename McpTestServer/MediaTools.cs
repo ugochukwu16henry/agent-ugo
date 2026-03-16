@@ -15,15 +15,25 @@ public static class MediaTools
     {
         _ = description;
 
-        var fileName = $"{assetType}_{Guid.NewGuid():N}.png";
-        var assetDirectory = Path.Combine(AppContext.BaseDirectory, "wwwroot", "assets");
+        var normalizedType = string.IsNullOrWhiteSpace(assetType) ? "asset" : assetType.Trim().ToLowerInvariant();
+        var fileName = normalizedType == "logo"
+            ? "logo.png"
+            : $"{normalizedType}_{Guid.NewGuid():N}.png";
+
+        var configuredOutput = Environment.GetEnvironmentVariable("AGENT_UGO_ASSET_OUTPUT_DIR");
+        var assetDirectory = string.IsNullOrWhiteSpace(configuredOutput)
+            ? Path.Combine(AppContext.BaseDirectory, "wwwroot", "assets")
+            : configuredOutput;
+
         Directory.CreateDirectory(assetDirectory);
 
         var fullPath = Path.Combine(assetDirectory, fileName);
 
-        await File.WriteAllTextAsync(fullPath, "IMAGE_DATA_STREAM");
+        const string placeholderPngBase64 = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIHWP4////fwAJ+wP9KobjigAAAABJRU5ErkJggg==";
+        var pngBytes = Convert.FromBase64String(placeholderPngBase64);
+        await File.WriteAllBytesAsync(fullPath, pngBytes);
 
-        return $"Asset generated successfully: /assets/{fileName}";
+        return $"Asset generated successfully: {fullPath}";
     }
 
     [McpServerTool, Description("Creates a PDF document based on project data.")]

@@ -31,6 +31,20 @@
     line-height: 1.2;
 }
 
+.header-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.header-logo {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.4rem;
+    border: 1px solid var(--neutral-stroke-rest);
+    background: var(--neutral-layer-3);
+}
+
 .header-badge {
     padding-inline: 0.75rem;
     border-radius: 999px;
