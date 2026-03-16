@@ -78,8 +78,73 @@
     max-height: 23dvh;
 }
 
+.approval-region {
+    max-height: 32dvh;
+}
+
 .terminal-region {
     max-height: 66dvh;
+}
+
+.approval-card {
+    display: grid;
+    gap: 0.625rem;
+    padding: 0.85rem;
+    border-radius: 0.9rem;
+    border: 1px solid var(--neutral-stroke-rest);
+    background: var(--neutral-layer-3);
+    margin-bottom: 0.75rem;
+}
+
+.approval-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+.approval-copy,
+.approval-meta,
+.muted-copy {
+    margin: 0;
+}
+
+.approval-meta,
+.muted-copy {
+    opacity: 0.74;
+}
+
+.approval-actions {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.approval-button {
+    border: 0;
+    border-radius: 999px;
+    padding: 0.55rem 1rem;
+    cursor: pointer;
+    font: inherit;
+    transition: transform 180ms ease, opacity 180ms ease;
+}
+
+.approval-button:hover:not(:disabled) {
+    transform: translateY(-1px);
+}
+
+.approval-button:disabled {
+    cursor: wait;
+    opacity: 0.6;
+}
+
+.approval-button.approve {
+    background: var(--accent-fill-rest);
+    color: var(--foreground-on-accent-rest);
+}
+
+.approval-button.reject {
+    background: color-mix(in srgb, var(--neutral-fill-input-rest) 70%, #b42318 30%);
+    color: var(--neutral-foreground-rest);
 }
 
 .terminal-line {
@@ -200,6 +265,10 @@
     .workers-region {
         max-height: 20dvh;
     }
+
+    .approval-region {
+        max-height: 26dvh;
+    }
 }
 
 @media (max-width: 767px) {
@@ -227,6 +296,7 @@
 
     .scroll-region,
     .workers-region,
+    .approval-region,
     .terminal-region {
         max-height: 38dvh;
     }

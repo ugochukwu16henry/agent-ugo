@@ -21,6 +21,45 @@
     <FluentGrid Class="dashboard-grid" Spacing="3" AdaptiveRendering="true">
         <FluentGridItem xs="12" sm="4" md="4">
             <FluentCard Appearance="Appearance.Glass" Class="panel-card">
+                <h4 class="panel-title">Human Approval Queue</h4>
+                <FluentDivider Role="DividerRole.Presentation" />
+                <div class="scroll-region approval-region">
+                    @if (PendingApprovals.Count == 0)
+                    {
+                        <p class="muted-copy">No critical actions waiting for review.</p>
+                    }
+                    else
+                    {
+                        @foreach (var request in PendingApprovals.OrderByDescending(r => r.RequestedAt))
+                        {
+                            <div class="approval-card">
+                                <div class="approval-header">
+                                    <strong>@request.Action</strong>
+                                    <span>@request.RequestedAt.ToLocalTime().ToString("HH:mm:ss")</span>
+                                </div>
+                                <p class="approval-copy">@request.Reason</p>
+                                <p class="approval-meta">Payload: @request.Parameters</p>
+                                <div class="approval-actions">
+                                    <button class="approval-button approve"
+                                            @onclick="() => SubmitDecisionAsync(request.Id, true)"
+                                            disabled="@IsSubmitting(request.Id)">
+                                        Approve
+                                    </button>
+                                    <button class="approval-button reject"
+                                            @onclick="() => SubmitDecisionAsync(request.Id, false)"
+                                            disabled="@IsSubmitting(request.Id)">
+                                        Reject
+                                    </button>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </FluentCard>
+        </FluentGridItem>
+
+        <FluentGridItem xs="12" sm="4" md="4">
+            <FluentCard Appearance="Appearance.Glass" Class="panel-card">
                 <h4 class="panel-title">Director's Ledger</h4>
                 <FluentDivider Role="DividerRole.Presentation" />
                 <div class="scroll-region">
@@ -88,6 +127,8 @@
 @code {
     private HubConnection? _hubConnection;
     private readonly List<AgentMessage> LiveThoughts = new();
+    private readonly List<ApprovalRequestMessage> PendingApprovals = new();
+    private readonly HashSet<string> _submittingApprovals = [];
 
     private readonly List<PlanStep> PlanSteps =
     [
@@ -108,7 +149,41 @@
             return InvokeAsync(StateHasChanged);
         });
 
+        _hubConnection.On<ApprovalRequestMessage>("ApprovalNeeded", request =>
+        {
+            PendingApprovals.RemoveAll(existing => existing.Id == request.Id);
+            PendingApprovals.Insert(0, request);
+            LiveThoughts.Insert(0, new AgentMessage("Director", $"Approval requested for {request.Action}.", "Awaiting Approval",
+DateTime.Now));
+            return InvokeAsync(StateHasChanged);
+        });
+
+        _hubConnection.On<ApprovalDecisionMessage>("ApprovalResolved", decision =>
+        {
+            PendingApprovals.RemoveAll(request => request.Id == decision.ApprovalId);
+            _submittingApprovals.Remove(decision.ApprovalId);
+            LiveThoughts.Insert(0, new AgentMessage(
+                "Director",
+                decision.Approved ? "Human approved the critical action." : "Human rejected the critical action.",
+                decision.Approved ? "Success" : "Rejected",
+                DateTime.Now));
+            return InvokeAsync(StateHasChanged);
+        });
+
         await _hubConnection.StartAsync();
+    }
+
+    private bool IsSubmitting(string approvalId) => _submittingApprovals.Contains(approvalId);
+
+    private async Task SubmitDecisionAsync(string approvalId, bool approved)
+    {
+        if (_hubConnection is null)
+        {
+            return;
+        }
+
+        _submittingApprovals.Add(approvalId);
+        await _hubConnection.InvokeAsync("SubmitApprovalDecision", approvalId, approved);
     }
 
     private static Appearance GetAppearance(string status) => status switch

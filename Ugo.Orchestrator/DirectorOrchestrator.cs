@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.SemanticKernel;
+using Ugo.Orchestrator.Services;
 
 namespace Ugo.Orchestrator;
 
@@ -13,11 +14,13 @@ public sealed class DirectorOrchestrator
     private readonly AgentProfile _reviewerAgent;
     private readonly AgentProfile _projectManagerAgent;
     private readonly TaskLedger _ledger;
+    private readonly OrchestrationService? _orchestrationService;
 
-    public DirectorOrchestrator(Kernel kernel, TaskLedger ledger)
+    public DirectorOrchestrator(Kernel kernel, TaskLedger ledger, OrchestrationService? orchestrationService = null)
     {
         _ = kernel;
         _ledger = ledger;
+        _orchestrationService = orchestrationService;
 
         _researcherAgent = new AgentProfile(
             "Ugo_Researcher",
@@ -49,6 +52,14 @@ public sealed class DirectorOrchestrator
     /// </summary>
     public async Task<bool> HumanApprovalCheckpointAsync(string actionDescription)
     {
+        if (_orchestrationService is not null)
+        {
+            return await _orchestrationService.RequestApprovalAsync(
+                action: "Critical Operation",
+                parameters: actionDescription,
+                reason: "Agent Ugo wants to execute a critical workflow step that can change project state.");
+        }
+
         Console.ForegroundColor = ConsoleColor.Yellow;
         Console.WriteLine($"\n[AGENT UGO REQUIRES APPROVAL]: {actionDescription}");
         Console.Write("Proceed? (y/n): ");
