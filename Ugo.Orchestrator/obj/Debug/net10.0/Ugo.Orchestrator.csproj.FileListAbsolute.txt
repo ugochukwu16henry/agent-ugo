@@ -7,3 +7,4 @@ C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\obj\Debug\net10.0\Ugo.Orchest
 C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\obj\Debug\net10.0\Ugo.Orchestrator.AssemblyInfo.cs
 C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\obj\Debug\net10.0\Ugo.Orchestrator.csproj.CoreCompileInputs.cache
 C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\obj\Debug\net10.0\Ugo.Orchestrator.sourcelink.json
+C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\obj\Debug\net10.0\Ugo.Orchestrator.MvcApplicationPartsAssemblyInfo.cache

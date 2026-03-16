@@ -86,6 +86,16 @@
           }
         }
       },
+      "Microsoft.AspNetCore.App.Internal.Assets/10.0.3": {
+        "type": "package",
+        "build": {
+          "build/Microsoft.AspNetCore.App.Internal.Assets.props": {},
+          "buildTransitive/Microsoft.AspNetCore.App.Internal.Assets.targets": {}
+        },
+        "buildMultiTargeting": {
+          "buildMultiTargeting/Microsoft.AspNetCore.App.Internal.Assets.targets": {}
+        }
+      },
       "Microsoft.AspNetCore.Http.Connections.Client/10.0.0": {
         "type": "package",
         "compile": {
@@ -494,6 +504,29 @@
         "lib/netstandard2.0/Microsoft.Agents.AI.Abstractions.xml",
         "microsoft.agents.ai.abstractions.1.0.0-rc4.nupkg.sha512",
         "microsoft.agents.ai.abstractions.nuspec"
+      ]
+    },
+    "Microsoft.AspNetCore.App.Internal.Assets/10.0.3": {
+      "sha512": "mr3Zn+ht8lijYvlMIasftw9opU9hsLKDdnOgQMmYI3RjWPJLOF9l8+YHDseRkTs97wOrULmJgo/NDCmzL/EGDg==",
+      "type": "package",
+      "path": "microsoft.aspnetcore.app.internal.assets/10.0.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "THIRD-PARTY-NOTICES.TXT",
+        "_framework/blazor.server.js",
+        "_framework/blazor.server.js.map",
+        "_framework/blazor.web.js",
+        "_framework/blazor.web.js.map",
+        "_framework/blazor.webassembly.js",
+        "_framework/blazor.webassembly.js.map",
+        "build/Microsoft.AspNetCore.App.Internal.Assets.props",
+        "build/Microsoft.AspNetCore.App.Internal.Assets.targets",
+        "buildMultiTargeting/Microsoft.AspNetCore.App.Internal.Assets.targets",
+        "buildTransitive/Microsoft.AspNetCore.App.Internal.Assets.targets",
+        "microsoft.aspnetcore.app.internal.assets.10.0.3.nupkg.sha512",
+        "microsoft.aspnetcore.app.internal.assets.nuspec"
       ]
     },
     "Microsoft.AspNetCore.Http.Connections.Client/10.0.0": {
@@ -938,6 +971,7 @@
   "projectFileDependencyGroups": {
     "net10.0": [
       "Microsoft.Agents.AI >= 1.0.0-rc4",
+      "Microsoft.AspNetCore.App.Internal.Assets >= 10.0.3",
       "Microsoft.AspNetCore.SignalR.Client >= 10.0.0",
       "Microsoft.FluentUI.AspNetCore.Components >= 4.13.0",
       "Microsoft.SemanticKernel >= 1.38.0"
@@ -989,6 +1023,12 @@
           "Microsoft.Agents.AI": {
             "target": "Package",
             "version": "[1.0.0-rc4, )"
+          },
+          "Microsoft.AspNetCore.App.Internal.Assets": {
+            "suppressParent": "All",
+            "target": "Package",
+            "version": "[10.0.3, )",
+            "autoReferenced": true
           },
           "Microsoft.AspNetCore.SignalR.Client": {
             "target": "Package",

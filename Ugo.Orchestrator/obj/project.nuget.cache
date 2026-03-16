@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "6L1c/7aiHao=",
+  "dgSpecHash": "Mq6GdmPDGek=",
   "success": true,
   "projectFilePath": "C:\\Users\\Dell\\Documents\\agent-ugo\\Ugo.Orchestrator\\Ugo.Orchestrator.csproj",
   "expectedPackageFiles": [
@@ -9,6 +9,7 @@
     "C:\\Users\\Dell\\.nuget\\packages\\google.protobuf\\3.30.2\\google.protobuf.3.30.2.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\microsoft.agents.ai\\1.0.0-rc4\\microsoft.agents.ai.1.0.0-rc4.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\microsoft.agents.ai.abstractions\\1.0.0-rc4\\microsoft.agents.ai.abstractions.1.0.0-rc4.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\microsoft.aspnetcore.app.internal.assets\\10.0.3\\microsoft.aspnetcore.app.internal.assets.10.0.3.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\microsoft.aspnetcore.http.connections.client\\10.0.0\\microsoft.aspnetcore.http.connections.client.10.0.0.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\microsoft.aspnetcore.signalr.client\\10.0.0\\microsoft.aspnetcore.signalr.client.10.0.0.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\microsoft.aspnetcore.signalr.client.core\\10.0.0\\microsoft.aspnetcore.signalr.client.core.10.0.0.nupkg.sha512",
