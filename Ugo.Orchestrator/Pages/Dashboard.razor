@@ -10,7 +10,6 @@
 
 <FluentHeader>
     <FluentStack Orientation="Orientation.Horizontal" VerticalAlignment="VerticalAlignment.Center">
-        <FluentIcon Value="@(new Icons.Filled.Size24.Bot())" Color="Color.Accent" />
         <h3>Agent Ugo Orchestrator</h3>
     </FluentStack>
 </FluentHeader>
@@ -121,5 +120,15 @@
         }
     }
 
-    private sealed record PlanStep(string Task, bool IsDone);
+    private sealed class PlanStep
+    {
+        public PlanStep(string task, bool isDone)
+        {
+            Task = task;
+            IsDone = isDone;
+        }
+
+        public string Task { get; }
+        public bool IsDone { get; set; }
+    }
 }

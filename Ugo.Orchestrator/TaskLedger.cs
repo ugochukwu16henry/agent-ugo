@@ -34,7 +34,7 @@ public sealed class TaskLedger
             role,
             lifecycle,
             DateTimeOffset.UtcNow,
-            completedAt: null);
+            CompletedAt: null);
 
         _tasks[id] = entry;
         return entry;
