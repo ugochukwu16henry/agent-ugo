@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.SemanticKernel;
 using Ugo.Orchestrator.Core;
+using Ugo.Orchestrator.Memory;
 using Ugo.Orchestrator.Services;
 
 namespace Ugo.Orchestrator;
@@ -19,6 +20,7 @@ public sealed class DirectorOrchestrator
     private readonly TelemetryProvider? _telemetryProvider;
     private readonly ThoughtCacheService? _thoughtCacheService;
     private readonly FastExecutionEngine? _fastExecutionEngine;
+    private readonly TimeTravelService? _timeTravelService;
 
     public DirectorOrchestrator(
         Kernel kernel,
@@ -26,7 +28,8 @@ public sealed class DirectorOrchestrator
         OrchestrationService? orchestrationService = null,
         TelemetryProvider? telemetryProvider = null,
         ThoughtCacheService? thoughtCacheService = null,
-        FastExecutionEngine? fastExecutionEngine = null)
+        FastExecutionEngine? fastExecutionEngine = null,
+        TimeTravelService? timeTravelService = null)
     {
         _ = kernel;
         _ledger = ledger;
@@ -34,6 +37,7 @@ public sealed class DirectorOrchestrator
         _telemetryProvider = telemetryProvider;
         _thoughtCacheService = thoughtCacheService;
         _fastExecutionEngine = fastExecutionEngine;
+        _timeTravelService = timeTravelService;
 
         _researcherAgent = new AgentProfile(
             "Ugo_Researcher",
@@ -97,10 +101,14 @@ public sealed class DirectorOrchestrator
     /// </summary>
     public async Task RunParallelDevTaskAsync(string goal)
     {
+        var threadId = Guid.NewGuid().ToString("N");
+
         if (_telemetryProvider is not null)
         {
             await _telemetryProvider.TrackLlmThoughtAsync("Director", $"Coordinating multi-agent goal: {goal}", "Working");
         }
+
+        await CaptureCheckpointAsync(threadId, "Director.Start", "Director", $"Coordinating multi-agent goal: {goal}", goal);
 
         // High-level planning and research
         var researchEntry = _ledger.AddTask(
@@ -121,6 +129,8 @@ public sealed class DirectorOrchestrator
 
         await Task.WhenAll(researchTask, planningTask);
 
+        await CaptureCheckpointAsync(threadId, "Planning.Completed", _plannerAgent.Name, $"Completed planning for: {goal}", goal);
+
         _ledger.TryUpdateLifecycle(researchEntry.Id, TaskLifecycleState.Completed);
         _ledger.TryUpdateLifecycle(planningEntry.Id, TaskLifecycleState.Completed);
 
@@ -135,6 +145,8 @@ public sealed class DirectorOrchestrator
         var frontendTask = ExecuteAgentTaskAsync(_frontendAgent, frontendDescription);
 
         await Task.WhenAll(backendTask, frontendTask);
+
+        await CaptureCheckpointAsync(threadId, "Implementation.Completed", "Director", $"Parallel implementation complete for: {goal}", goal);
 
         if (_fastExecutionEngine is not null)
         {
@@ -157,6 +169,7 @@ public sealed class DirectorOrchestrator
             TaskLifecycleState.InProgress);
 
         await ExecuteAgentTaskAsync(_reviewerAgent, reviewEntry.Description);
+        await CaptureCheckpointAsync(threadId, "Review.Completed", _reviewerAgent.Name, $"Review complete for: {goal}", goal);
         _ledger.TryUpdateLifecycle(reviewEntry.Id, TaskLifecycleState.WaitingForHumanFinalApproval);
 
         // Checkpoint before taking any destructive action (e.g., merging branches, running scripts).
@@ -186,9 +199,33 @@ public sealed class DirectorOrchestrator
             }
 
             // TODO: Proceed with MCP Tool calls for git and deployment here.
+            await CaptureCheckpointAsync(threadId, "Deployment.Ready", _projectManagerAgent.Name, $"Deployment marked ready for: {goal}", goal);
             _ledger.TryUpdateLifecycle(gitEntry.Id, TaskLifecycleState.Completed);
             _ledger.TryUpdateLifecycle(deployEntry.Id, TaskLifecycleState.Completed);
         }
+    }
+
+    private async Task CaptureCheckpointAsync(string threadId, string nodeName, string agentName, string thought, string goal)
+    {
+        if (_timeTravelService is null)
+        {
+            return;
+        }
+
+        await _timeTravelService.RecordStateAsync(
+            threadId,
+            agentName,
+            nodeName,
+            thought,
+            new Dictionary<string, object>
+            {
+                ["Goal"] = goal,
+                ["NodeName"] = nodeName,
+                ["LastThought"] = thought,
+                ["AgentName"] = agentName
+            });
+
+        await _timeTravelService.CreateCheckpointAsync(threadId, nodeName);
     }
 
     private async Task<string> ExecuteAgentTaskAsync(AgentProfile agent, string taskDescription)

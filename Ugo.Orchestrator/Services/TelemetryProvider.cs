@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.Logging;
 using Ugo.Orchestrator.Hubs;
 
 namespace Ugo.Orchestrator.Services;

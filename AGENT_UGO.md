@@ -40,3 +40,18 @@ Durable Memory: By checkpointing every step to a database, it can work on massiv
 Local Mastery: Unlike cloud-isolated tools, AGENT UGO’s MCP server allows it to run your specific local dev environment exactly as you do.
 
 AGENT UGO is not just an assistant; it is your new AI Software Engineering Department.
+
+Environment configuration
+-------------------------
+
+Agent Ugo relies on a small set of environment variables to connect to external services:
+
+- **OPENAI_API_KEY**: Secret key for OpenAI (used for image/logo generation and future model calls).
+- **UGO_DB_PROVIDER**: Optional database provider for checkpoints. Defaults to `sqlite`. Set to `postgres` to use PostgreSQL.
+- **UGO_DB_CONNECTION_STRING**: Connection string for the checkpoint store.
+  - SQLite example: `Data Source=./data/ugo.db`
+  - PostgreSQL example: `Host=localhost;Database=ugo;Username=ugo;Password=yourpassword`
+- **APPLICATIONINSIGHTS_CONNECTION_STRING** or **AzureMonitor:ConnectionString**: Optional telemetry endpoint for Azure Monitor / Application Insights.
+- **UGO_DASHBOARD_BASEURL**: Optional base URL for the Agent Ugo Blazor dashboard, used by future Playwright-based preview tools.
+
+These values can be set via your shell environment, `launchSettings.json`, or user secrets, depending on your deployment model.

@@ -81,6 +81,53 @@
     border: 1px solid var(--neutral-stroke-rest);
 }
 
+.timeline-toolbar {
+    margin-bottom: 0.75rem;
+}
+
+.timeline-input {
+    width: 100%;
+    border-radius: 0.75rem;
+    border: 1px solid var(--neutral-stroke-rest);
+    background: var(--neutral-layer-2);
+    color: inherit;
+    padding: 0.8rem 0.9rem;
+    font: inherit;
+}
+
+.timeline-list {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.timeline-item-card {
+    border: 1px solid var(--neutral-stroke-rest);
+    background: var(--neutral-layer-3);
+    border-radius: 0.9rem;
+    padding: 0.85rem;
+    display: grid;
+    gap: 0.45rem;
+}
+
+.timeline-label {
+    font-weight: 700;
+}
+
+.timeline-copy,
+.timeline-meta {
+    margin: 0;
+}
+
+.timeline-meta {
+    opacity: 0.7;
+}
+
+.timeline-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
 .section-title {
     margin: 0.875rem 0 0.5rem 0;
     font-weight: 600;

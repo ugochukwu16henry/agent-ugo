@@ -4,9 +4,11 @@
 @using Microsoft.AspNetCore.Components.Web
 @using Microsoft.FluentUI.AspNetCore.Components
 @using Ugo.Orchestrator.Hubs
+@using Ugo.Orchestrator.Memory
 @implements IAsyncDisposable
 @inject NavigationManager NavManager
 @inject PreviewService PreviewService
+@inject TimeTravelService TimeTravelService
 
 <PageTitle>Agent Ugo | Command Center</PageTitle>
 
@@ -38,110 +40,144 @@
             </FluentCard>
         </FluentGridItem>
 
-        <FluentGridItem xs="12" sm="4" md="4">
+        <FluentGridItem xs="12" sm="12">
             <FluentCard Appearance="Appearance.Glass" Class="panel-card">
-                <h4 class="panel-title">Human Approval Queue</h4>
-                <FluentDivider Role="DividerRole.Presentation" />
-                <div class="scroll-region approval-region">
-                    @if (PendingApprovals.Count == 0)
+                <h4 class="panel-title">History Timeline</h4>
+                <div class="timeline-toolbar">
+                    <input class="timeline-input" @bind="ManualOverrideInstruction"
+                           placeholder="Manual Override: change the plan and fork a new path" />
+                </div>
+                <div class="timeline-list">
+                    @if (History.Count == 0)
                     {
-                        <p class="muted-copy">No critical actions waiting for review.</p>
+                        <p class="muted-copy">No checkpoints recorded yet.</p>
                     }
                     else
                     {
-                        @foreach (var request in PendingApprovals.OrderByDescending(r => r.RequestedAt))
+                        @foreach (var step in History)
                         {
-                            <div class="approval-card">
-                                <div class="approval-header">
-                                    <strong>@request.Action</strong>
-                                    <span>@request.RequestedAt.ToLocalTime().ToString("HH:mm:ss")</span>
-                                </div>
-                                <p class="approval-copy">@request.Reason</p>
-                                <p class="approval-meta">Payload: @request.Parameters</p>
-                                <div class="approval-actions">
-                                    <button class="approval-button approve"
-                                            @onclick="() => SubmitDecisionAsync(request.Id, true)"
-                                            disabled="@IsSubmitting(request.Id)">
-                                        Approve
-                                    </button>
-                                    <button class="approval-button reject"
-                                            @onclick="() => SubmitDecisionAsync(request.Id, false)"
-                                            disabled="@IsSubmitting(request.Id)">
-                                        Reject
-                                    </button>
-                                </div>
+                            <div class="timeline-item-card">
+                                <div class="timeline-label">@step.NodeName</div>
+                                <div class="timeline-copy">@step.AgentName: @step.LastThought</div>
+                                <div class="timeline-meta">@step.CreatedAtUtc.ToLocalTime().ToString("HH:mm:ss") | Thread
+                                    @step.ThreadId</div>
+                                    <div class="timeline-actions">
+                                        <button class="approval-button approve" @onclick="() => RewindAsync(step.Id)">Rewind to
+                                            Here</button>
+                                            <button class="approval-button reject" @onclick="() => ForkAsync(step.Id)">Fork with
+                                                Override</button>
+                                            </div>
+                                        </div>
+                                    }
+                                }
                             </div>
-                        }
-                    }
-                </div>
-            </FluentCard>
-        </FluentGridItem>
+                        </FluentCard>
+                    </FluentGridItem>
 
-        <FluentGridItem xs="12" sm="4" md="4">
-            <FluentCard Appearance="Appearance.Glass" Class="panel-card">
-                <h4 class="panel-title">Director's Ledger</h4>
-                <FluentDivider Role="DividerRole.Presentation" />
-                <div class="scroll-region">
-                    @foreach (var step in PlanSteps)
-                    {
-                        <FluentCheckbox Label="@step.Task" @bind-Value="step.IsDone" ReadOnly="true" />
-                    }
-                </div>
-            </FluentCard>
-        </FluentGridItem>
+                    <FluentGridItem xs="12" sm="4" md="4">
+                        <FluentCard Appearance="Appearance.Glass" Class="panel-card">
+                            <h4 class="panel-title">Human Approval Queue</h4>
+                            <FluentDivider Role="DividerRole.Presentation" />
+                            <div class="scroll-region approval-region">
+                                @if (PendingApprovals.Count == 0)
+                                {
+                                    <p class="muted-copy">No critical actions waiting for review.</p>
+                                }
+                                else
+                                {
+                                    @foreach (var request in PendingApprovals.OrderByDescending(r => r.RequestedAt))
+                                    {
+                                        <div class="approval-card">
+                                            <div class="approval-header">
+                                                <strong>@request.Action</strong>
+                                                <span>@request.RequestedAt.ToLocalTime().ToString("HH:mm:ss")</span>
+                                            </div>
+                                            <p class="approval-copy">@request.Reason</p>
+                                            <p class="approval-meta">Payload: @request.Parameters</p>
+                                            <div class="approval-actions">
+                                                <button class="approval-button approve"
+                                                        @onclick="() => SubmitDecisionAsync(request.Id, true)"
+                                                        disabled="@IsSubmitting(request.Id)">
+                                                    Approve
+                                                </button>
+                                                <button class="approval-button reject"
+                                                        @onclick="() => SubmitDecisionAsync(request.Id, false)"
+                                                        disabled="@IsSubmitting(request.Id)">
+                                                    Reject
+                                                </button>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </FluentCard>
+                    </FluentGridItem>
 
-        <FluentGridItem xs="12" sm="4" md="4">
-            <FluentCard Appearance="Appearance.Glass" Class="panel-card">
-                <h4 class="panel-title">Parallel Workers (Backend/UI)</h4>
-                <FluentDivider Role="DividerRole.Presentation" />
+                    <FluentGridItem xs="12" sm="4" md="4">
+                        <FluentCard Appearance="Appearance.Glass" Class="panel-card">
+                            <h4 class="panel-title">Director's Ledger</h4>
+                            <FluentDivider Role="DividerRole.Presentation" />
+                            <div class="scroll-region">
+                                @foreach (var step in PlanSteps)
+                                {
+                                    <FluentCheckbox Label="@step.Task" @bind-Value="step.IsDone" ReadOnly="true" />
+                                }
+                            </div>
+                        </FluentCard>
+                    </FluentGridItem>
 
-                <h5 class="section-title">Backend</h5>
-                <div class="scroll-region workers-region">
-                    <FluentStack Orientation="Orientation.Vertical" Spacing="2">
-                        @foreach (var msg in LiveThoughts.Where(IsBackendMessage).OrderByDescending(m => m.Timestamp))
-                        {
-                            <FluentBadge Class="thought-badge" Appearance="@GetAppearance(msg.Status)">
-                                @msg.AgentName: @msg.Thought
-                            </FluentBadge>
-                        }
-                    </FluentStack>
-                </div>
+                    <FluentGridItem xs="12" sm="4" md="4">
+                        <FluentCard Appearance="Appearance.Glass" Class="panel-card">
+                            <h4 class="panel-title">Parallel Workers (Backend/UI)</h4>
+                            <FluentDivider Role="DividerRole.Presentation" />
 
-                <FluentDivider Role="DividerRole.Presentation" />
+                            <h5 class="section-title">Backend</h5>
+                            <div class="scroll-region workers-region">
+                                <FluentStack Orientation="Orientation.Vertical" Spacing="2">
+                                    @foreach (var msg in LiveThoughts.Where(IsBackendMessage).OrderByDescending(m => m.Timestamp))
+                                    {
+                                        <FluentBadge Class="thought-badge" Appearance="@GetAppearance(msg.Status)">
+                                            @msg.AgentName: @msg.Thought
+                                        </FluentBadge>
+                                    }
+                                </FluentStack>
+                            </div>
 
-                <h5 class="section-title">UI</h5>
-                <div class="scroll-region workers-region">
-                    <FluentStack Orientation="Orientation.Vertical" Spacing="2">
-                        @foreach (var msg in LiveThoughts.Where(IsUiMessage).OrderByDescending(m => m.Timestamp))
-                        {
-                            <FluentBadge Class="thought-badge" Appearance="@GetAppearance(msg.Status)">
-                                @msg.AgentName: @msg.Thought
-                            </FluentBadge>
-                        }
-                    </FluentStack>
-                </div>
-            </FluentCard>
-        </FluentGridItem>
+                            <FluentDivider Role="DividerRole.Presentation" />
 
-        <FluentGridItem xs="12" sm="4" md="4">
-            <FluentCard Appearance="Appearance.Glass" Class="panel-card">
-                <h4 class="panel-title">Terminal Output</h4>
-                <FluentDivider Role="DividerRole.Presentation" />
-                <div class="scroll-region terminal-region">
-                    <FluentStack Orientation="Orientation.Vertical" Spacing="2">
-                        @foreach (var line in BuildTerminalFeed())
-                        {
-                            <p class="terminal-line">
-                                [@line.Timestamp.ToLocalTime().ToString("HH:mm:ss")] @line.Source (@line.Status):
-                                @line.Content
-                            </p>
-                        }
-                    </FluentStack>
-                </div>
-            </FluentCard>
-        </FluentGridItem>
-    </FluentGrid>
-</div>
+                            <h5 class="section-title">UI</h5>
+                            <div class="scroll-region workers-region">
+                                <FluentStack Orientation="Orientation.Vertical" Spacing="2">
+                                    @foreach (var msg in LiveThoughts.Where(IsUiMessage).OrderByDescending(m => m.Timestamp))
+                                    {
+                                        <FluentBadge Class="thought-badge" Appearance="@GetAppearance(msg.Status)">
+                                            @msg.AgentName: @msg.Thought
+                                        </FluentBadge>
+                                    }
+                                </FluentStack>
+                            </div>
+                        </FluentCard>
+                    </FluentGridItem>
+
+                    <FluentGridItem xs="12" sm="4" md="4">
+                        <FluentCard Appearance="Appearance.Glass" Class="panel-card">
+                            <h4 class="panel-title">Terminal Output</h4>
+                            <FluentDivider Role="DividerRole.Presentation" />
+                            <div class="scroll-region terminal-region">
+                                <FluentStack Orientation="Orientation.Vertical" Spacing="2">
+                                    @foreach (var line in BuildTerminalFeed())
+                                    {
+                                        <p class="terminal-line">
+                                            [@line.Timestamp.ToLocalTime().ToString("HH:mm:ss")] @line.Source (@line.Status):
+                                            @line.Content
+                                        </p>
+                                    }
+                                </FluentStack>
+                            </div>
+                        </FluentCard>
+                    </FluentGridItem>
+                </FluentGrid>
+            </div>
 
 @code {
     private HubConnection? _hubConnection;
@@ -149,6 +185,8 @@
     private readonly List<InternalTraceMessage> InternalTraces = new();
     private readonly List<ApprovalRequestMessage> PendingApprovals = new();
     private readonly HashSet<string> _submittingApprovals = [];
+    private readonly List<TimeTravelCheckpointView> History = new();
+    private string ManualOverrideInstruction = string.Empty;
 
     private readonly List<PlanStep> PlanSteps =
     [
@@ -159,6 +197,8 @@
 
     protected override async Task OnInitializedAsync()
     {
+        await RefreshHistoryAsync();
+
         _hubConnection = new HubConnectionBuilder()
             .WithUrl(NavManager.ToAbsoluteUri("/ugohub"))
             .Build();
@@ -166,6 +206,7 @@
         _hubConnection.On<AgentMessage>("ReceiveThought", msg =>
         {
             LiveThoughts.Insert(0, msg);
+            _ = InvokeAsync(RefreshHistoryAsync);
             return InvokeAsync(StateHasChanged);
         });
 
@@ -222,6 +263,41 @@ DateTime.Now));
 
         _submittingApprovals.Add(approvalId);
         await _hubConnection.InvokeAsync("SubmitApprovalDecision", approvalId, approved);
+    }
+
+    private async Task RewindAsync(Guid checkpointId)
+    {
+        var rewound = await TimeTravelService.RewindToStep(checkpointId);
+        if (rewound is not null)
+        {
+            await RefreshHistoryAsync();
+            LiveThoughts.Insert(0, new AgentMessage("Director", $"Timeline rewound to {rewound.NodeName}.", "Rewound",
+DateTime.Now));
+        }
+    }
+
+    private async Task ForkAsync(Guid checkpointId)
+    {
+        if (string.IsNullOrWhiteSpace(ManualOverrideInstruction))
+        {
+            LiveThoughts.Insert(0, new AgentMessage("Director", "Enter a manual override before forking a checkpoint.", "Needs Input", DateTime.Now));
+            return;
+        }
+
+        var forked = await TimeTravelService.ModifyAndResume(checkpointId, ManualOverrideInstruction);
+        if (forked is not null)
+        {
+            ManualOverrideInstruction = string.Empty;
+            await RefreshHistoryAsync();
+            LiveThoughts.Insert(0, new AgentMessage("Director", $"Forked new timeline from {forked.NodeName}.", "Forked",
+DateTime.Now));
+        }
+    }
+
+    private async Task RefreshHistoryAsync()
+    {
+        History.Clear();
+        History.AddRange(await TimeTravelService.GetHistoryAsync());
     }
 
     private static Appearance GetAppearance(string status) => status switch
