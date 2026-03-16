@@ -19,7 +19,10 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 app.UseAntiforgery();
+
+app.MapStaticAssets();
 
 app.MapHub<AgentUgoHub>("/ugohub");
 app.MapRazorComponents<App>()
