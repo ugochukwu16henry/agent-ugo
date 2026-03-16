@@ -1,0 +1,125 @@
+@page "/dashboard"
+@using Microsoft.AspNetCore.SignalR.Client
+@using Microsoft.AspNetCore.Components.Web
+@using Microsoft.FluentUI.AspNetCore.Components
+@using Ugo.Orchestrator.Hubs
+@implements IAsyncDisposable
+@inject NavigationManager NavManager
+
+<PageTitle>Agent Ugo | Command Center</PageTitle>
+
+<FluentHeader>
+    <FluentStack Orientation="Orientation.Horizontal" VerticalAlignment="VerticalAlignment.Center">
+        <FluentIcon Value="@(new Icons.Filled.Size24.Bot())" Color="Color.Accent" />
+        <h3>Agent Ugo Orchestrator</h3>
+    </FluentStack>
+</FluentHeader>
+
+<FluentGrid Spacing="3" AdaptiveRendering="true">
+    <FluentGridItem xs="12" sm="4" md="4">
+        <FluentCard Appearance="Appearance.Glass">
+            <h4>Director's Ledger</h4>
+            <FluentDivider Role="DividerRole.Presentation" />
+            @foreach (var step in PlanSteps)
+            {
+                <FluentCheckbox Label="@step.Task" @bind-Value="step.IsDone" ReadOnly="true" />
+            }
+        </FluentCard>
+    </FluentGridItem>
+
+    <FluentGridItem xs="12" sm="4" md="4">
+        <FluentCard Appearance="Appearance.Glass">
+            <h4>Parallel Workers (Backend/UI)</h4>
+            <FluentDivider Role="DividerRole.Presentation" />
+
+            <h5>Backend</h5>
+            <FluentStack Orientation="Orientation.Vertical" Spacing="2">
+                @foreach (var msg in LiveThoughts.Where(IsBackendMessage).OrderByDescending(m => m.Timestamp))
+                {
+                    <FluentBadge Appearance="@GetAppearance(msg.Status)">
+                        @msg.AgentName: @msg.Thought
+                    </FluentBadge>
+                }
+            </FluentStack>
+
+            <FluentDivider Role="DividerRole.Presentation" />
+
+            <h5>UI</h5>
+            <FluentStack Orientation="Orientation.Vertical" Spacing="2">
+                @foreach (var msg in LiveThoughts.Where(IsUiMessage).OrderByDescending(m => m.Timestamp))
+                {
+                    <FluentBadge Appearance="@GetAppearance(msg.Status)">
+                        @msg.AgentName: @msg.Thought
+                    </FluentBadge>
+                }
+            </FluentStack>
+        </FluentCard>
+    </FluentGridItem>
+
+    <FluentGridItem xs="12" sm="4" md="4">
+        <FluentCard Appearance="Appearance.Glass">
+            <h4>Terminal Output</h4>
+            <FluentDivider Role="DividerRole.Presentation" />
+            <FluentStack Orientation="Orientation.Vertical" Spacing="2">
+                @foreach (var msg in LiveThoughts.OrderByDescending(m => m.Timestamp))
+                {
+                    <p>
+                        [@msg.Timestamp.ToLocalTime().ToString("HH:mm:ss")] @msg.AgentName (@msg.Status): @msg.Thought
+                    </p>
+                }
+            </FluentStack>
+        </FluentCard>
+    </FluentGridItem>
+</FluentGrid>
+
+@code {
+    private HubConnection? _hubConnection;
+    private readonly List<AgentMessage> LiveThoughts = new();
+
+    private readonly List<PlanStep> PlanSteps =
+    [
+        new("Research and plan implementation", true),
+        new("Run Backend and UI in parallel", false),
+        new("Review output and finalize", false)
+    ];
+
+    protected override async Task OnInitializedAsync()
+    {
+        _hubConnection = new HubConnectionBuilder()
+            .WithUrl(NavManager.ToAbsoluteUri("/ugohub"))
+            .Build();
+
+        _hubConnection.On<AgentMessage>("ReceiveThought", msg =>
+        {
+            LiveThoughts.Insert(0, msg);
+            return InvokeAsync(StateHasChanged);
+        });
+
+        await _hubConnection.StartAsync();
+    }
+
+    private static Appearance GetAppearance(string status) => status switch
+    {
+        "Working" => Appearance.Accent,
+        "Success" => Appearance.Lightweight,
+        "Error" => Appearance.Neutral,
+        _ => Appearance.Neutral
+    };
+
+    private static bool IsBackendMessage(AgentMessage msg)
+        => msg.AgentName.Contains("backend", StringComparison.OrdinalIgnoreCase);
+
+    private static bool IsUiMessage(AgentMessage msg)
+        => msg.AgentName.Contains("ui", StringComparison.OrdinalIgnoreCase)
+           || msg.AgentName.Contains("frontend", StringComparison.OrdinalIgnoreCase);
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_hubConnection is not null)
+        {
+            await _hubConnection.DisposeAsync();
+        }
+    }
+
+    private sealed record PlanStep(string Task, bool IsDone);
+}
