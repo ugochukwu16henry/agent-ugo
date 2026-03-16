@@ -217,11 +217,13 @@ public sealed class TimeTravelService
 
         var snapshots = await dbContext.AgentStates
             .AsNoTracking()
-            .OrderByDescending(x => x.CreatedAtUtc)
-            .Take(limit)
             .ToListAsync(cancellationToken);
 
-        return snapshots.Select(ToView).ToArray();
+        return snapshots
+            .OrderByDescending(x => x.CreatedAtUtc)
+            .Take(limit)
+            .Select(ToView)
+            .ToArray();
     }
 
     private static string BuildSessionEnvelopeJson(string threadId, string nodeName, IReadOnlyDictionary<string, string> variables)
