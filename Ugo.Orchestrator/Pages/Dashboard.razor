@@ -12,173 +12,122 @@
 
 <PageTitle>Agent Ugo | Command Center</PageTitle>
 
-<div class="dashboard-root">
-    <FluentHeader Class="dashboard-header">
-        <FluentStack Orientation="Orientation.Horizontal"
-                     VerticalAlignment="VerticalAlignment.Center"
-                     HorizontalAlignment="HorizontalAlignment.SpaceBetween"
-                     Width="100%">
-            <div class="header-brand">
-                <img src="/logo.png" alt="Ugo Logo" class="header-logo" />
-                <h3 class="dashboard-title">Agent Ugo Orchestrator</h3>
-                <img src="/ugo-bot-avatar.png" alt="Ugo Bot Avatar" class="header-avatar" />
-            </div>
-            <FluentBadge Class="header-badge" Appearance="Appearance.Accent">Live Command Center</FluentBadge>
-        </FluentStack>
-    </FluentHeader>
+<div class="ugo-workbench">
+    <div class="activity-bar" aria-label="Activity Bar">
+        <button class="activity-btn" title="Chat" type="button"><i
+            class="codicon codicon-comment-discussion"></i></button>
+            <button class="activity-btn" title="Files" type="button"><i class="codicon codicon-files"></i></button>
+            <button class="activity-btn" title="History" type="button"><i class="codicon codicon-history"></i></button>
+        </div>
 
-    <FluentGrid Class="dashboard-grid" Spacing="3" AdaptiveRendering="true">
-        <FluentGridItem xs="12" sm="12">
-            <FluentCard Appearance="Appearance.Glass" Class="panel-card">
-                <h4 class="panel-title">Live App Preview</h4>
-                <div class="preview-browser-frame">
-                    @if (!string.IsNullOrWhiteSpace(PreviewService.CurrentPreviewBase64))
-                    {
-                        <img src="data:image/png;base64,@PreviewService.CurrentPreviewBase64"
-                             class="preview-image"
-                             alt="Live preview capture" />
-                    }
-                    else
-                    {
-                        <FluentProgressRing />
-                        <p class="muted-copy">Loading Agent Ugo's UI build preview...</p>
-                    }
-                </div>
-            </FluentCard>
-        </FluentGridItem>
-
-        <FluentGridItem xs="12" sm="12">
-            <FluentCard Appearance="Appearance.Glass" Class="panel-card">
-                <h4 class="panel-title">History Timeline</h4>
-                <div class="timeline-toolbar">
-                    <input class="timeline-input" @bind="ManualOverrideInstruction"
-                           placeholder="Manual Override: change the plan and fork a new path" />
-                </div>
-                <div class="timeline-list">
-                    @if (History.Count == 0)
-                    {
-                        <p class="muted-copy">No checkpoints recorded yet.</p>
-                    }
-                    else
-                    {
-                        @foreach (var step in History)
+        <FluentSplitter Orientation="Orientation.Horizontal" BarSize="4" Panel1MinSize="220px"
+                        Class="workbench-horizontal-splitter">
+            <Panel1>
+                <aside class="primary-sidebar">
+                    <div class="ugo-tab-header">
+                        <div class="ugo-tab">AGENT UGO THOUGHT LEDGER</div>
+                    </div>
+                    <div class="sidebar-scroll">
+                        @foreach (var msg in LiveThoughts.Take(30))
                         {
-                            <div class="timeline-item-card">
-                                <div class="timeline-label">@step.NodeName</div>
-                                <div class="timeline-copy">@step.AgentName: @step.LastThought</div>
-                                <div class="timeline-meta">@step.CreatedAtUtc.ToLocalTime().ToString("HH:mm:ss") | Thread @step.ThreadId</div>
-                                <div class="timeline-actions">
-                                    <button class="approval-button approve" @onclick="() => RewindAsync(step.Id)">Rewind to Here</button>
-                                    <button class="approval-button reject" @onclick="() => ForkAsync(step.Id)">Fork with Override</button>
-                                </div>
+                            <div class="sidebar-item">
+                                <div class="sidebar-item-title">@msg.AgentName</div>
+                                <div class="sidebar-item-copy">@msg.Thought</div>
                             </div>
                         }
-                    }
-                </div>
-            </FluentCard>
-        </FluentGridItem>
-
-        <FluentGridItem xs="12" sm="4" md="4">
-            <FluentCard Appearance="Appearance.Glass" Class="panel-card">
-                <h4 class="panel-title">Human Approval Queue</h4>
-                <FluentDivider Role="DividerRole.Presentation" />
-                <div class="scroll-region approval-region">
-                    @if (PendingApprovals.Count == 0)
-                    {
-                        <p class="muted-copy">No critical actions waiting for review.</p>
-                    }
-                    else
-                    {
-                        @foreach (var request in PendingApprovals.OrderByDescending(r => r.RequestedAt))
+                        @if (LiveThoughts.Count == 0)
                         {
-                            <div class="approval-card">
-                                <div class="approval-header">
-                                    <strong>@request.Action</strong>
-                                    <span>@request.RequestedAt.ToLocalTime().ToString("HH:mm:ss")</span>
-                                </div>
-                                <p class="approval-copy">@request.Reason</p>
-                                <p class="approval-meta">Payload: @request.Parameters</p>
-                                <div class="approval-actions">
-                                    <button class="approval-button approve"
-                                            @onclick="() => SubmitDecisionAsync(request.Id, true)"
-                                            disabled="@IsSubmitting(request.Id)">
-                                        Approve
-                                    </button>
-                                    <button class="approval-button reject"
-                                            @onclick="() => SubmitDecisionAsync(request.Id, false)"
-                                            disabled="@IsSubmitting(request.Id)">
-                                        Reject
-                                    </button>
-                                </div>
+                            <div class="sidebar-item-copy">No thoughts streamed yet.</div>
+                        }
+                    </div>
+                </aside>
+            </Panel1>
+
+            <Panel2>
+                <FluentSplitter Orientation="Orientation.Vertical" BarSize="4" Panel2MinSize="180px"
+                                Class="workbench-vertical-splitter">
+                    <Panel1>
+                        <main class="editor-view">
+                            <div class="editor-header">
+                                <img src="/logo.png" alt="Ugo Logo" class="header-logo" />
+                                <h3 class="dashboard-title">Agent Ugo Orchestrator</h3>
+                                <img src="/ugo-bot-avatar.png" alt="Ugo Bot Avatar" class="header-avatar" />
+                                <FluentBadge Class="header-badge" Appearance="Appearance.Accent">Live Command Center
+                                </FluentBadge>
                             </div>
-                        }
-                    }
-                </div>
-            </FluentCard>
-        </FluentGridItem>
 
-        <FluentGridItem xs="12" sm="4" md="4">
-            <FluentCard Appearance="Appearance.Glass" Class="panel-card">
-                <h4 class="panel-title">Director's Ledger</h4>
-                <FluentDivider Role="DividerRole.Presentation" />
-                <div class="scroll-region">
-                    @foreach (var step in PlanSteps)
-                    {
-                        <FluentCheckbox Label="@step.Task" @bind-Value="step.IsDone" ReadOnly="true" />
-                    }
-                </div>
-            </FluentCard>
-        </FluentGridItem>
+                            <div class="editor-content-grid">
+                                <section class="panel-card">
+                                    <h4 class="panel-title">Live App Preview</h4>
+                                    <div class="preview-browser-frame">
+                                        @if (!string.IsNullOrWhiteSpace(PreviewService.CurrentPreviewBase64))
+                                        {
+                                            <img src="data:image/png;base64,@PreviewService.CurrentPreviewBase64"
+                                                 class="preview-image"                                             alt="Live preview capture" />
+                                        }
+                                        else
+                                        {
+                                            <FluentProgressRing />
+                                            <p class="muted-copy">Loading Agent Ugo's UI build preview...</p>
+                                        }
+                                    </div>
+                                </section>
 
-        <FluentGridItem xs="12" sm="4" md="4">
-            <FluentCard Appearance="Appearance.Glass" Class="panel-card">
-                <h4 class="panel-title">Parallel Workers (Backend/UI)</h4>
-                <FluentDivider Role="DividerRole.Presentation" />
+                                <section class="panel-card">
+                                    <h4 class="panel-title">History Timeline</h4>
+                                    <div class="timeline-toolbar">
+                                        <input class="timeline-input" @bind="ManualOverrideInstruction"
+                                               placeholder="Manual Override: change the plan and fork a new path" />
+                                    </div>
+                                    <div class="timeline-list">
+                                        @if (History.Count == 0)
+                                        {
+                                            <p class="muted-copy">No checkpoints recorded yet.</p>
+                                        }
+                                        else
+                                        {
+                                            @foreach (var step in History)
+                                            {
+                                                <div class="timeline-item-card">
+                                                    <div class="timeline-label">@step.NodeName</div>
+                                                    <div class="timeline-copy">@step.AgentName: @step.LastThought</div>
+                                                    <div class="timeline-meta">@step.CreatedAtUtc.ToLocalTime().ToString("HH:mm:ss")
+                                                        | Thread @step.ThreadId</div>
+                                                        <div class="timeline-actions">
+                                                            <button class="approval-button approve"
+                                                                    @onclick="() => RewindAsync(step.Id)">Rewind to Here</button>
+                                                            <button class="approval-button reject"
+                                                                    @onclick="() => ForkAsync(step.Id)">Fork with Override</button>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                        </div>
+                                    </section>
+                                </div>
+                            </main>
+                        </Panel1>
 
-                <h5 class="section-title">Backend</h5>
-                <div class="scroll-region workers-region">
-                    <FluentStack Orientation="Orientation.Vertical" Spacing="2">
-                        @foreach (var msg in LiveThoughts.Where(IsBackendMessage).OrderByDescending(m => m.Timestamp))
-                        {
-                            <FluentBadge Class="thought-badge" Appearance="@GetAppearance(msg.Status)">
-                                @msg.AgentName: @msg.Thought
-                            </FluentBadge>
-                        }
-                    </FluentStack>
-                </div>
-
-                <FluentDivider Role="DividerRole.Presentation" />
-
-                <h5 class="section-title">UI</h5>
-                <div class="scroll-region workers-region">
-                    <FluentStack Orientation="Orientation.Vertical" Spacing="2">
-                        @foreach (var msg in LiveThoughts.Where(IsUiMessage).OrderByDescending(m => m.Timestamp))
-                        {
-                            <FluentBadge Class="thought-badge" Appearance="@GetAppearance(msg.Status)">
-                                @msg.AgentName: @msg.Thought
-                            </FluentBadge>
-                        }
-                    </FluentStack>
-                </div>
-            </FluentCard>
-        </FluentGridItem>
-
-        <FluentGridItem xs="12" sm="4" md="4">
-            <FluentCard Appearance="Appearance.Glass" Class="panel-card">
-                <h4 class="panel-title">Terminal Output</h4>
-                <FluentDivider Role="DividerRole.Presentation" />
-                <div class="scroll-region terminal-region">
-                    <FluentStack Orientation="Orientation.Vertical" Spacing="2">
-                        @foreach (var line in BuildTerminalFeed())
-                        {
-                            <p class="terminal-line">[@line.Timestamp.ToLocalTime().ToString("HH:mm:ss")] @line.Source (@line.Status): @line.Content</p>
-                        }
-                    </FluentStack>
-                </div>
-            </FluentCard>
-        </FluentGridItem>
-    </FluentGrid>
-</div>
+                        <Panel2>
+                            <section class="ugo-terminal">
+                                @if (!BuildTerminalFeed().Any())
+                                {
+                                    <div>&gt; Agent Ugo Initializing...</div>
+                                    <div>&gt; MCP Server Connected to Terminal.</div>
+                                }
+                                else
+                                {
+                                    @foreach (var line in BuildTerminalFeed())
+                                    {
+                                        <div>&gt; [@line.Timestamp.ToLocalTime().ToString("HH:mm:ss")] @line.Source: @line.Content</div>
+                                    }
+                                }
+                            </section>
+                        </Panel2>
+                    </FluentSplitter>
+                </Panel2>
+            </FluentSplitter>
+        </div>
 
 @code {
     private HubConnection? _hubConnection;
@@ -220,7 +169,8 @@
         _hubConnection.On<PreviewFrameMessage>("ReceivePreviewFrame", frame =>
         {
             PreviewService.UpdatePreview(frame.Base64Png);
-            InternalTraces.Insert(0, new InternalTraceMessage("Preview", "CapturePreview", $"Frame captured from {frame.SourceUrl}", "Success", frame.CapturedAt));
+            InternalTraces.Insert(0, new InternalTraceMessage("Preview", "CapturePreview", $"Frame captured from {frame.SourceUrl}",
+"Success", frame.CapturedAt));
             return InvokeAsync(StateHasChanged);
         });
 
@@ -228,7 +178,8 @@
         {
             PendingApprovals.RemoveAll(existing => existing.Id == request.Id);
             PendingApprovals.Insert(0, request);
-            LiveThoughts.Insert(0, new AgentMessage("Director", $"Approval requested for {request.Action}.", "Awaiting Approval", DateTime.Now));
+            LiveThoughts.Insert(0, new AgentMessage("Director", $"Approval requested for {request.Action}.", "Awaiting Approval",
+DateTime.Now));
             return InvokeAsync(StateHasChanged);
         });
 
@@ -262,7 +213,8 @@
         if (rewound is not null)
         {
             await RefreshHistoryAsync();
-            LiveThoughts.Insert(0, new AgentMessage("Director", $"Timeline rewound to {rewound.NodeName}.", "Rewound", DateTime.Now));
+            LiveThoughts.Insert(0, new AgentMessage("Director", $"Timeline rewound to {rewound.NodeName}.", "Rewound",
+DateTime.Now));
         }
     }
 
@@ -279,7 +231,8 @@
         {
             ManualOverrideInstruction = string.Empty;
             await RefreshHistoryAsync();
-            LiveThoughts.Insert(0, new AgentMessage("Director", $"Forked new timeline from {forked.NodeName}.", "Forked", DateTime.Now));
+            LiveThoughts.Insert(0, new AgentMessage("Director", $"Forked new timeline from {forked.NodeName}.", "Forked",
+DateTime.Now));
         }
     }
 
@@ -308,7 +261,8 @@
     private IEnumerable<TerminalLine> BuildTerminalFeed()
         => LiveThoughts
             .Select(msg => new TerminalLine(msg.Timestamp, msg.AgentName, msg.Status, msg.Thought))
-            .Concat(InternalTraces.Select(trace => new TerminalLine(trace.Timestamp.LocalDateTime, $"Trace/{trace.Kind}", trace.Status, $"{trace.Source}: {trace.Content}")))
+            .Concat(InternalTraces.Select(trace => new TerminalLine(trace.Timestamp.LocalDateTime, $"Trace/{trace.Kind}",
+trace.Status, $"{trace.Source}: {trace.Content}")))
             .OrderByDescending(line => line.Timestamp)
             .Take(80);
 

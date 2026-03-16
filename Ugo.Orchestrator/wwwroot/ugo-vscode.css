@@ -1,0 +1,276 @@
+/* ugo-vscode.css */
+:root {
+    --bg-editor: #1F1F1F;
+    --bg-sidebar: #181818;
+    --bg-activity: #181818;
+    --bg-panel: #181818;
+    --status-blue: #007ACC;
+    --border-color: #2B2B2B;
+    --text-main: #CCCCCC;
+    --text-bright: #FFFFFF;
+    --accent-blue: #0078D4;
+}
+
+body {
+    background-color: var(--bg-editor);
+    color: var(--text-main);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+}
+
+.ugo-workbench {
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    overflow: hidden;
+}
+
+.activity-bar {
+    width: 48px;
+    background: var(--bg-activity);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+}
+
+.activity-btn {
+    width: 32px;
+    height: 32px;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--text-main);
+    cursor: pointer;
+}
+
+.activity-btn:hover {
+    background: #2a2d2e;
+    color: var(--text-bright);
+}
+
+.codicon {
+    font-style: normal;
+    font-size: 16px;
+}
+
+.codicon-comment-discussion::before { content: "💬"; }
+.codicon-files::before { content: "📁"; }
+.codicon-history::before { content: "🕘"; }
+
+.workbench-horizontal-splitter,
+.workbench-vertical-splitter {
+    height: 100%;
+}
+
+.primary-sidebar {
+    background: var(--bg-sidebar);
+    border-right: 1px solid var(--border-color);
+    height: 100%;
+    display: grid;
+    grid-template-rows: auto 1fr;
+}
+
+/* VS Code Tabs look */
+.ugo-tab-header {
+    background-color: var(--bg-sidebar);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+}
+
+.ugo-tab {
+    padding: 8px 16px;
+    background-color: var(--bg-editor);
+    border-right: 1px solid var(--border-color);
+    font-size: 12px;
+    color: var(--text-main);
+    cursor: pointer;
+}
+
+.sidebar-scroll {
+    overflow: auto;
+    padding: 10px;
+    display: grid;
+    gap: 8px;
+}
+
+.sidebar-item {
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 8px;
+    background: #1e1e1e;
+}
+
+.sidebar-item-title {
+    color: var(--text-bright);
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 3px;
+}
+
+.sidebar-item-copy {
+    color: var(--text-main);
+    font-size: 12px;
+}
+
+.editor-view {
+    background: var(--bg-editor);
+    height: 100%;
+    display: grid;
+    grid-template-rows: auto 1fr;
+}
+
+.editor-header {
+    border-bottom: 1px solid var(--border-color);
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.dashboard-title {
+    margin: 0;
+    color: var(--text-bright);
+    font-size: 16px;
+}
+
+.header-logo,
+.header-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    background: #2a2d2e;
+}
+
+.header-avatar {
+    border-radius: 999px;
+}
+
+.header-badge {
+    margin-left: auto;
+}
+
+.editor-content-grid {
+    padding: 12px;
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(2, minmax(280px, 1fr));
+    overflow: auto;
+}
+
+.panel-card {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: #1b1b1b;
+    padding: 12px;
+}
+
+.panel-title {
+    margin: 0 0 10px;
+    color: var(--text-bright);
+    font-size: 14px;
+}
+
+.preview-browser-frame {
+    min-height: 220px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    display: grid;
+    place-items: center;
+    gap: 10px;
+    background: #111;
+    padding: 10px;
+}
+
+.preview-image {
+    width: 100%;
+    max-height: 300px;
+    object-fit: contain;
+    border-radius: 6px;
+}
+
+.timeline-input {
+    width: 100%;
+    border: 1px solid var(--border-color);
+    background: var(--bg-editor);
+    color: var(--text-main);
+    border-radius: 6px;
+    padding: 8px;
+}
+
+.timeline-list {
+    margin-top: 10px;
+    display: grid;
+    gap: 8px;
+}
+
+.timeline-item-card {
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background: #1e1e1e;
+    padding: 8px;
+}
+
+.timeline-label {
+    color: var(--text-bright);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.timeline-copy,
+.timeline-meta {
+    color: var(--text-main);
+    font-size: 12px;
+}
+
+.timeline-actions {
+    margin-top: 8px;
+    display: flex;
+    gap: 8px;
+}
+
+.approval-button {
+    border: 0;
+    border-radius: 999px;
+    padding: 6px 10px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.approval-button.approve {
+    background: var(--accent-blue);
+    color: #fff;
+}
+
+.approval-button.reject {
+    background: #3a3d41;
+    color: var(--text-main);
+}
+
+/* Terminal Style */
+.ugo-terminal {
+    height: 100%;
+    overflow: auto;
+    border-top: 1px solid var(--border-color);
+    background-color: var(--bg-panel);
+    font-family: 'Cascadia Code', 'Courier New', monospace;
+    color: #00FF9D;
+    padding: 10px;
+    font-size: 12px;
+    line-height: 1.55;
+}
+
+.muted-copy {
+    color: #8c8c8c;
+    font-size: 12px;
+}
+
+@media (max-width: 900px) {
+    .editor-content-grid {
+        grid-template-columns: 1fr;
+    }
+}

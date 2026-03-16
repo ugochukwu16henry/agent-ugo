@@ -142,3 +142,4 @@ C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\bin\Debug\net10.0\Microsoft.E
 C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\bin\Debug\net10.0\Microsoft.Extensions.DependencyModel.dll
 C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\obj\Debug\net10.0\compressed\2rraph39lo-{0}-3lxmip6asc-3lxmip6asc.gz
 C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\obj\Debug\net10.0\compressed\cdt5b5cf77-{0}-das66eehl5-das66eehl5.gz
+C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\obj\Debug\net10.0\compressed\gxuqciqa7j-{0}-eb6w0afmoz-eb6w0afmoz.gz

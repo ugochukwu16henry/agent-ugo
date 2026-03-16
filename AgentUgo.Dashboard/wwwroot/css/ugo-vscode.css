@@ -1,0 +1,21 @@
+:root {
+    --vscode-bg: #1F1F1F;
+    --vscode-sideBar-bg: #181818;
+    --vscode-activityBar-bg: #181818;
+    --vscode-statusBar-bg: #007ACC;
+    --vscode-accent: #0078D4;
+    --vscode-border: #2B2B2B;
+}
+
+body.vscode-theme {
+    background-color: var(--vscode-bg);
+    color: #ffffff;
+}
+
+/* Flat VS Code-like card styling for all Fluent cards */
+.fluent-card {
+    border-radius: 0;
+    border: 1px solid var(--vscode-border);
+    box-shadow: none;
+}
+
