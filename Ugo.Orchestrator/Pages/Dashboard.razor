@@ -14,8 +14,8 @@
 
 <div class="dashboard-root">
     <FluentHeader Class="dashboard-header">
-        <FluentStack Orientation="Orientation.Horizontal" VerticalAlignment="VerticalAlignment.Center"
-                     HorizontalAlignment="HorizontalAlignment.SpaceBetween" Width="100%">
+        <FluentStack Orientation="Orientation.Horizontal"                     VerticalAlignment="VerticalAlignment.Center"
+                     HorizontalAlignment="HorizontalAlignment.SpaceBetween"                     Width="100%">
             <div class="header-brand">
                 <img src="logo.png" alt="Ugo Logo" class="header-logo" />
                 <h3 class="dashboard-title">Agent Ugo Orchestrator</h3>
@@ -32,7 +32,7 @@
                 <div class="preview-browser-frame">
                     @if (!string.IsNullOrWhiteSpace(PreviewService.CurrentPreviewBase64))
                     {
-                        <img src="data:image/png;base64,@PreviewService.CurrentPreviewBase64" class="preview-image"
+                        <img src="data:image/png;base64,@PreviewService.CurrentPreviewBase64"                             class="preview-image"
                              alt="Live preview capture" />
                     }
                     else
@@ -48,7 +48,7 @@
             <FluentCard Appearance="Appearance.Glass" Class="panel-card">
                 <h4 class="panel-title">History Timeline</h4>
                 <div class="timeline-toolbar">
-                    <input class="timeline-input" @bind="ManualOverrideInstruction"
+                    <input class="timeline-input"                           @bind="ManualOverrideInstruction"
                            placeholder="Manual Override: change the plan and fork a new path" />
                 </div>
                 <div class="timeline-list">
@@ -236,8 +236,11 @@
         {
             PendingApprovals.RemoveAll(existing => existing.Id == request.Id);
             PendingApprovals.Insert(0, request);
-            LiveThoughts.Insert(0, new AgentMessage("Director", $"Approval requested for {request.Action}.", "Awaiting Approval",
-DateTime.Now));
+            LiveThoughts.Insert(0, new AgentMessage(
+                "Director",
+                $"Approval requested for {request.Action}.",
+                "Awaiting Approval",
+                DateTime.Now));
             return InvokeAsync(StateHasChanged);
         });
 
@@ -309,6 +312,7 @@ DateTime.Now));
         "Working" => Appearance.Accent,
         "Success" => Appearance.Lightweight,
         "Error" => Appearance.Neutral,
+        "Cached" => Appearance.Accent,
         _ => Appearance.Neutral
     };
 
