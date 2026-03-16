@@ -141,3 +141,4 @@ C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\bin\Debug\net10.0\Microsoft.E
 C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\bin\Debug\net10.0\Microsoft.EntityFrameworkCore.Sqlite.dll
 C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\bin\Debug\net10.0\Microsoft.Extensions.DependencyModel.dll
 C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\obj\Debug\net10.0\compressed\cdt5b5cf77-{0}-l7z62exla3-l7z62exla3.gz
+C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\obj\Debug\net10.0\compressed\2rraph39lo-{0}-3lxmip6asc-3lxmip6asc.gz
