@@ -1,0 +1,6 @@
+C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\obj\Release\net10.0\Ugo.Orchestrator.csproj.AssemblyReference.cache
+C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\obj\Release\net10.0\Ugo.Orchestrator.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\obj\Release\net10.0\Ugo.Orchestrator.AssemblyInfoInputs.cache
+C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\obj\Release\net10.0\Ugo.Orchestrator.AssemblyInfo.cs
+C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\obj\Release\net10.0\Ugo.Orchestrator.csproj.CoreCompileInputs.cache
+C:\Users\Dell\Documents\agent-ugo\Ugo.Orchestrator\obj\Release\net10.0\Ugo.Orchestrator.sourcelink.json

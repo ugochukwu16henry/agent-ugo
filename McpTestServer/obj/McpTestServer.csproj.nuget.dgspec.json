@@ -110,22 +110,6 @@
           "warn": true,
           "downloadDependencies": [
             {
-              "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
-              "version": "[10.0.3, 10.0.3]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Runtime.NativeAOT.win-x64",
-              "version": "[10.0.3, 10.0.3]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Runtime.win-x64",
-              "version": "[10.0.3, 10.0.3]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Runtime.win-x64",
-              "version": "[10.0.3, 10.0.3]"
-            },
-            {
               "name": "runtime.win-x64.Microsoft.DotNet.ILCompiler",
               "version": "[10.0.3, 10.0.3]"
             }
@@ -411,11 +395,6 @@
             "System.Xml.XPath.XDocument": "(,5.0.32767]"
           }
         }
-      },
-      "runtimes": {
-        "win-x64": {
-          "#import": []
-        }
       }
     },
     "C:\\Users\\Dell\\Documents\\agent-ugo\\Ugo.Orchestrator\\Ugo.Orchestrator.csproj": {
@@ -466,15 +445,21 @@
               "target": "Package",
               "version": "[1.0.0-rc4, )"
             },
-            "Microsoft.AspNetCore.App.Internal.Assets": {
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[10.0.3, )",
-              "autoReferenced": true
-            },
             "Microsoft.AspNetCore.SignalR.Client": {
               "target": "Package",
               "version": "[10.0.0, )"
+            },
+            "Microsoft.Data.Sqlite": {
+              "target": "Package",
+              "version": "[10.0.5, )"
+            },
+            "Microsoft.Extensions.AI.Evaluation": {
+              "target": "Package",
+              "version": "[10.4.0, )"
+            },
+            "Microsoft.Extensions.VectorData.Abstractions": {
+              "target": "Package",
+              "version": "[10.0.1, )"
             },
             "Microsoft.FluentUI.AspNetCore.Components": {
               "target": "Package",
@@ -923,11 +908,6 @@
             "System.Xml.XPath": "(,4.3.32767]",
             "System.Xml.XPath.XDocument": "(,5.0.32767]"
           }
-        }
-      },
-      "runtimes": {
-        "win-x64": {
-          "#import": []
         }
       }
     }
