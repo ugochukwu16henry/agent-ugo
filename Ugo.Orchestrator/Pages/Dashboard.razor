@@ -1,3 +1,4 @@
+@page "/"
 @page "/dashboard"
 @using Microsoft.AspNetCore.SignalR.Client
 @using Microsoft.AspNetCore.Components.Web
@@ -8,68 +9,81 @@
 
 <PageTitle>Agent Ugo | Command Center</PageTitle>
 
-<FluentHeader>
-    <FluentStack Orientation="Orientation.Horizontal" VerticalAlignment="VerticalAlignment.Center">
-        <h3>Agent Ugo Orchestrator</h3>
-    </FluentStack>
-</FluentHeader>
+<div class="dashboard-root">
+    <FluentHeader Class="dashboard-header">
+        <FluentStack Orientation="Orientation.Horizontal" VerticalAlignment="VerticalAlignment.Center"
+                     HorizontalAlignment="HorizontalAlignment.SpaceBetween" Width="100%">
+            <h3 class="dashboard-title">Agent Ugo Orchestrator</h3>
+            <FluentBadge Appearance="Appearance.Accent">Live Command Center</FluentBadge>
+        </FluentStack>
+    </FluentHeader>
 
-<FluentGrid Spacing="3" AdaptiveRendering="true">
-    <FluentGridItem xs="12" sm="4" md="4">
-        <FluentCard Appearance="Appearance.Glass">
-            <h4>Director's Ledger</h4>
-            <FluentDivider Role="DividerRole.Presentation" />
-            @foreach (var step in PlanSteps)
-            {
-                <FluentCheckbox Label="@step.Task" @bind-Value="step.IsDone" ReadOnly="true" />
-            }
-        </FluentCard>
-    </FluentGridItem>
+    <FluentGrid Class="dashboard-grid" Spacing="3" AdaptiveRendering="true">
+        <FluentGridItem xs="12" sm="4" md="4">
+            <FluentCard Appearance="Appearance.Glass" Class="panel-card">
+                <h4 class="panel-title">Director's Ledger</h4>
+                <FluentDivider Role="DividerRole.Presentation" />
+                <div class="scroll-region">
+                    @foreach (var step in PlanSteps)
+                    {
+                        <FluentCheckbox Label="@step.Task" @bind-Value="step.IsDone" ReadOnly="true" />
+                    }
+                </div>
+            </FluentCard>
+        </FluentGridItem>
 
-    <FluentGridItem xs="12" sm="4" md="4">
-        <FluentCard Appearance="Appearance.Glass">
-            <h4>Parallel Workers (Backend/UI)</h4>
-            <FluentDivider Role="DividerRole.Presentation" />
+        <FluentGridItem xs="12" sm="4" md="4">
+            <FluentCard Appearance="Appearance.Glass" Class="panel-card">
+                <h4 class="panel-title">Parallel Workers (Backend/UI)</h4>
+                <FluentDivider Role="DividerRole.Presentation" />
 
-            <h5>Backend</h5>
-            <FluentStack Orientation="Orientation.Vertical" Spacing="2">
-                @foreach (var msg in LiveThoughts.Where(IsBackendMessage).OrderByDescending(m => m.Timestamp))
-                {
-                    <FluentBadge Appearance="@GetAppearance(msg.Status)">
-                        @msg.AgentName: @msg.Thought
-                    </FluentBadge>
-                }
-            </FluentStack>
+                <h5 class="section-title">Backend</h5>
+                <div class="scroll-region workers-region">
+                    <FluentStack Orientation="Orientation.Vertical" Spacing="2">
+                        @foreach (var msg in LiveThoughts.Where(IsBackendMessage).OrderByDescending(m => m.Timestamp))
+                        {
+                            <FluentBadge Appearance="@GetAppearance(msg.Status)">
+                                @msg.AgentName: @msg.Thought
+                            </FluentBadge>
+                        }
+                    </FluentStack>
+                </div>
 
-            <FluentDivider Role="DividerRole.Presentation" />
+                <FluentDivider Role="DividerRole.Presentation" />
 
-            <h5>UI</h5>
-            <FluentStack Orientation="Orientation.Vertical" Spacing="2">
-                @foreach (var msg in LiveThoughts.Where(IsUiMessage).OrderByDescending(m => m.Timestamp))
-                {
-                    <FluentBadge Appearance="@GetAppearance(msg.Status)">
-                        @msg.AgentName: @msg.Thought
-                    </FluentBadge>
-                }
-            </FluentStack>
-        </FluentCard>
-    </FluentGridItem>
+                <h5 class="section-title">UI</h5>
+                <div class="scroll-region workers-region">
+                    <FluentStack Orientation="Orientation.Vertical" Spacing="2">
+                        @foreach (var msg in LiveThoughts.Where(IsUiMessage).OrderByDescending(m => m.Timestamp))
+                        {
+                            <FluentBadge Appearance="@GetAppearance(msg.Status)">
+                                @msg.AgentName: @msg.Thought
+                            </FluentBadge>
+                        }
+                    </FluentStack>
+                </div>
+            </FluentCard>
+        </FluentGridItem>
 
-    <FluentGridItem xs="12" sm="4" md="4">
-        <FluentCard Appearance="Appearance.Glass">
-            <h4>Terminal Output</h4>
-            <FluentDivider Role="DividerRole.Presentation" />
-            <FluentStack Orientation="Orientation.Vertical" Spacing="2">
-                @foreach (var msg in LiveThoughts.OrderByDescending(m => m.Timestamp))
-                {
-                    <p>
-                        [@msg.Timestamp.ToLocalTime().ToString("HH:mm:ss")] @msg.AgentName (@msg.Status): @msg.Thought
-                    </p>
-                }
-            </FluentStack>
-        </FluentCard>
-    </FluentGridItem>
-</FluentGrid>
+        <FluentGridItem xs="12" sm="4" md="4">
+            <FluentCard Appearance="Appearance.Glass" Class="panel-card">
+                <h4 class="panel-title">Terminal Output</h4>
+                <FluentDivider Role="DividerRole.Presentation" />
+                <div class="scroll-region terminal-region">
+                    <FluentStack Orientation="Orientation.Vertical" Spacing="2">
+                        @foreach (var msg in LiveThoughts.OrderByDescending(m => m.Timestamp))
+                        {
+                            <p class="terminal-line">
+                                [@msg.Timestamp.ToLocalTime().ToString("HH:mm:ss")] @msg.AgentName (@msg.Status):
+                                @msg.Thought
+                            </p>
+                        }
+                    </FluentStack>
+                </div>
+            </FluentCard>
+        </FluentGridItem>
+    </FluentGrid>
+</div>
 
 @code {
     private HubConnection? _hubConnection;

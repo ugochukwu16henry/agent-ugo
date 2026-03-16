@@ -30,10 +30,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xSb3V0ZXMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Dell/Documents/agent-ugo/Ugo.Orchestrator/Pages/Dashboard.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGFzaGJvYXJkLnJhem9y
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/Dell/Documents/agent-ugo/Ugo.Orchestrator/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Dell/Documents/agent-ugo/Ugo.Orchestrator/Pages/Dashboard.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGFzaGJvYXJkLnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-s0rgekyrwp

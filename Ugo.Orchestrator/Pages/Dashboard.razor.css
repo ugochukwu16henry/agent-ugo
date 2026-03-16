@@ -1,13 +1,10 @@
-@import '_content/Microsoft.FluentUI.AspNetCore.Components/Microsoft.FluentUI.AspNetCore.Components.wuc5ioiakb.bundle.scp.css';
-
-/* /Pages/Dashboard.razor.rz.scp.css */
-.dashboard-root[b-s0rgekyrwp] {
+.dashboard-root {
     min-height: 100dvh;
     padding: 1rem;
     background: var(--neutral-layer-1);
 }
 
-.dashboard-header[b-s0rgekyrwp] {
+.dashboard-header {
     position: sticky;
     top: 0;
     z-index: 10;
@@ -19,47 +16,47 @@
     background: var(--neutral-layer-2);
 }
 
-.dashboard-title[b-s0rgekyrwp] {
+.dashboard-title {
     margin: 0;
     letter-spacing: 0.02em;
 }
 
-.dashboard-grid[b-s0rgekyrwp] {
+.dashboard-grid {
     align-items: stretch;
 }
 
-.panel-card[b-s0rgekyrwp] {
+.panel-card {
     height: 100%;
     border: 1px solid var(--neutral-stroke-rest);
     border-radius: 1rem;
     padding: 0.75rem;
 }
 
-.panel-title[b-s0rgekyrwp] {
+.panel-title {
     margin: 0 0 0.5rem 0;
     font-weight: 600;
 }
 
-.section-title[b-s0rgekyrwp] {
+.section-title {
     margin: 0.75rem 0 0.5rem 0;
     font-weight: 600;
 }
 
-.scroll-region[b-s0rgekyrwp] {
+.scroll-region {
     max-height: 60dvh;
     overflow: auto;
     padding-right: 0.25rem;
 }
 
-.workers-region[b-s0rgekyrwp] {
+.workers-region {
     max-height: 24dvh;
 }
 
-.terminal-region[b-s0rgekyrwp] {
+.terminal-region {
     max-height: 68dvh;
 }
 
-.terminal-line[b-s0rgekyrwp] {
+.terminal-line {
     margin: 0;
     padding: 0.5rem 0.625rem;
     border-radius: 0.5rem;
@@ -69,13 +66,13 @@
 }
 
 @media (max-width: 767px) {
-    .dashboard-root[b-s0rgekyrwp] {
+    .dashboard-root {
         padding: 0.75rem;
     }
 
-    .scroll-region[b-s0rgekyrwp],
-    .workers-region[b-s0rgekyrwp],
-    .terminal-region[b-s0rgekyrwp] {
+    .scroll-region,
+    .workers-region,
+    .terminal-region {
         max-height: 40dvh;
     }
 }
