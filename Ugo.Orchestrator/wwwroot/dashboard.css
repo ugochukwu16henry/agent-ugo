@@ -1,3 +1,17 @@
+:root {
+    --neutral-layer-1: #0b1020;
+    --neutral-layer-2: #11182b;
+    --neutral-layer-3: #162038;
+    --neutral-layer-4: #1b2742;
+    --neutral-stroke-rest: rgba(255, 255, 255, 0.12);
+    --neutral-stroke-strong-rest: rgba(255, 255, 255, 0.2);
+    --neutral-fill-input-rest: #1c2845;
+    --accent-fill-rest: #22d3ee;
+    --foreground-on-accent-rest: #081019;
+    --neutral-foreground-rest: #dbeafe;
+    --body-font: Inter, Segoe UI, Arial, sans-serif;
+}
+
 .dashboard-root {
     min-height: 100dvh;
     padding: 1.25rem;

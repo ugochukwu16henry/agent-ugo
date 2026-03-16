@@ -1,8 +1,8 @@
 @page "/"
 @page "/dashboard"
-@using Microsoft.AspNetCore.SignalR.Client
 @using Microsoft.AspNetCore.Components.Web
 @using Microsoft.FluentUI.AspNetCore.Components
+@using Microsoft.AspNetCore.SignalR.Client
 @using Ugo.Orchestrator.Hubs
 @using Ugo.Orchestrator.Memory
 @implements IAsyncDisposable
@@ -14,12 +14,12 @@
 
 <div class="dashboard-root">
     <FluentHeader Class="dashboard-header">
-        <FluentStack Orientation="Orientation.Horizontal"                     VerticalAlignment="VerticalAlignment.Center"
-                     HorizontalAlignment="HorizontalAlignment.SpaceBetween"                     Width="100%">
+        <FluentStack Orientation="Orientation.Horizontal" VerticalAlignment="VerticalAlignment.Center"
+                     HorizontalAlignment="HorizontalAlignment.SpaceBetween" Width="100%">
             <div class="header-brand">
-                <img src="logo.png" alt="Ugo Logo" class="header-logo" />
+                <img src="/logo.png" alt="Ugo Logo" class="header-logo" />
                 <h3 class="dashboard-title">Agent Ugo Orchestrator</h3>
-                <img src="ugo-bot-avatar.png" alt="Ugo Bot Avatar" class="header-avatar" />
+                <img src="/ugo-bot-avatar.png" alt="Ugo Bot Avatar" class="header-avatar" />
             </div>
             <FluentBadge Class="header-badge" Appearance="Appearance.Accent">Live Command Center</FluentBadge>
         </FluentStack>
@@ -32,7 +32,7 @@
                 <div class="preview-browser-frame">
                     @if (!string.IsNullOrWhiteSpace(PreviewService.CurrentPreviewBase64))
                     {
-                        <img src="data:image/png;base64,@PreviewService.CurrentPreviewBase64"                             class="preview-image"
+                        <img src="data:image/png;base64,@PreviewService.CurrentPreviewBase64" class="preview-image"
                              alt="Live preview capture" />
                     }
                     else
@@ -48,7 +48,7 @@
             <FluentCard Appearance="Appearance.Glass" Class="panel-card">
                 <h4 class="panel-title">History Timeline</h4>
                 <div class="timeline-toolbar">
-                    <input class="timeline-input"                           @bind="ManualOverrideInstruction"
+                    <input class="timeline-input" @bind="ManualOverrideInstruction"
                            placeholder="Manual Override: change the plan and fork a new path" />
                 </div>
                 <div class="timeline-list">

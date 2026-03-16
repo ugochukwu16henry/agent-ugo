@@ -4,16 +4,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <base href="/" />
-    <link rel="icon" type="image/x-icon" href="@Assets["favicon.ico"]" />
-    <link rel="stylesheet" href="@Assets["dashboard.css"]" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="stylesheet" href="dashboard.css" />
     <HeadOutlet @rendermode="RenderMode.InteractiveServer" />
 </head>
 
 <body>
     <Routes @rendermode="RenderMode.InteractiveServer" />
-        <script type="module"
-            src="@Assets["_content/Microsoft.FluentUI.AspNetCore.Components/Microsoft.FluentUI.AspNetCore.Components.lib.module.js"]"></script>
-        <script src="@Assets["_framework/blazor.web.js"]"></script>
+    <script src="_framework/blazor.server.js"></script>
 </body>
 
 </html>
