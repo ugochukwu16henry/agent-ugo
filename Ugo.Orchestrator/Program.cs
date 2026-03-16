@@ -13,6 +13,7 @@ using Ugo.Orchestrator.Services;
 using Microsoft.Extensions.AI;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.WebHost.UseStaticWebAssets();
 var stateDirectory = Path.Combine(AppContext.BaseDirectory, "state");
 Directory.CreateDirectory(stateDirectory);
 var stateDbPath = Path.Combine(stateDirectory, "ugo-state.db");
