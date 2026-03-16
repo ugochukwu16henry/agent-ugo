@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AgentUgo.Dashboard")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e1460cb8cf63456c793dbe3f008e849033400d2f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+df83f8ad8965ce796f65ddb80f71c73b403686fb")]
 [assembly: System.Reflection.AssemblyProductAttribute("AgentUgo.Dashboard")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AgentUgo.Dashboard")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

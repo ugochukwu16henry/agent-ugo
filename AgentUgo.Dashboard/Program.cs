@@ -1,5 +1,5 @@
 using AgentUgo.Dashboard.Components;
-using AgentUgo.Dashboard.Hubs;
+using Ugo.Orchestrator.Hubs;
 using Microsoft.AspNetCore.ResponseCompression;
 
 var builder = WebApplication.CreateBuilder(args);
